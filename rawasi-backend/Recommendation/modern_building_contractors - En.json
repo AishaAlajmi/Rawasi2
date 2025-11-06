@@ -1,0 +1,1228 @@
+[
+  {
+    "Contractor_Name": "Al Arabiya Contracting Company Ltd.",
+    "Alliance_Company_Name": "Al Manar",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Abdullah Al-Samida",
+    "Email": "a.alsamida@alarabiyaco.com",
+    "Mobile_Number": "0595550567",
+    "Building_Tech_Type": "Precast system",
+    "totalScore": 4.3
+  },
+  {
+    "Contractor_Name": "Ramada Contracting Company",
+    "Alliance_Company_Name": "Al-Sumaydai Development and Real Estate Company",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Majed",
+    "Email": "majed@ramayaksa.com",
+    "Mobile_Number": "0555221040",
+    "Building_Tech_Type": "A L C PANEL"
+  },
+  {
+    "Contractor_Name": "Shar Contracting Company",
+    "Alliance_Company_Name": "ASPACK Company for Autoclaved Aerated Concrete",
+    "Preferred_Region": "Eastern, Central",
+    "Contact_Person": "Saqr Al-Bulaidi",
+    "Email": "sc@shar.com.sa",
+    "Mobile_Number": "0500600404",
+    "Building_Tech_Type": "Autoclaved Aerated Concrete",
+    "totalScore": 4.1
+  },
+  {
+    "Contractor_Name": "Al Mabda Contracting Company",
+    "Alliance_Company_Name": "ASPACK Company for Autoclaved Aerated Concrete",
+    "Preferred_Region": "Eastern, Central",
+    "Contact_Person": "Riyadh Al-Theyab",
+    "Email": "Riyadh@mabda.com.sa",
+    "Mobile_Number": "0505101017",
+    "Building_Tech_Type": "Autoclaved Aerated Concrete",
+    "totalScore": 2.6
+  },
+  {
+    "Contractor_Name": "Olow Al-Binaa Establishment",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Amer Mohammed",
+    "Email": "ameraly@olow-albonia.com",
+    "Mobile_Number": "0534278308",
+    "Building_Tech_Type": "EPS WALL PANEL",
+    "totalScore": 4.3
+  },
+  {
+    "Contractor_Name": "Hazem Al-Shuraidah Establishment for Contracting",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Hazem Al-Shuraidah",
+    "Email": "hazem@alshuraidah.com",
+    "Mobile_Number": "0533331551",
+    "Building_Tech_Type": "EPS WALL PANEL",
+    "totalScore": 4.0
+  },
+  {
+    "Contractor_Name": "Modern Foundations Contracting Company",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Ali",
+    "Email": "ali@mfc.com.sa",
+    "Mobile_Number": "0550882299",
+    "Building_Tech_Type": "EPS WALL PANEL",
+    "totalScore": 5.0
+  },
+  {
+    "Contractor_Name": "Aspack Contracting Company",
+    "Alliance_Company_Name": "ASPACK Company for Autoclaved Aerated Concrete",
+    "Preferred_Region": "Eastern, Central",
+    "Contact_Person": "Mohammed Iqbal",
+    "Email": "m.iqbal@aspacksa.com",
+    "Mobile_Number": "0543632514",
+    "Building_Tech_Type": "Autoclaved Aerated Concrete"
+  },
+  {
+    "Contractor_Name": "Rukn Abha Establishment for Contracting",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Musa Al-Shehri",
+    "Email": "abhamusa@hotmail.com",
+    "Mobile_Number": "0555743831",
+    "Building_Tech_Type": "EPS WALL PANEL",
+    "totalScore": 4.5
+  },
+  {
+    "Contractor_Name": "Al-Taleah Houses Contracting Company",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Eastern, Central",
+    "Contact_Person": "Saud Al-Taleah",
+    "Email": "saud@altaleah.com",
+    "Mobile_Number": "0504951010",
+    "Building_Tech_Type": "EPS WALL PANEL"
+  },
+  {
+    "Contractor_Name": "Azhar Holding Company",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Western, Central",
+    "Contact_Person": "Zahr",
+    "Email": "zhr@azharholding.com",
+    "Mobile_Number": "0566333737",
+    "Building_Tech_Type": "EPS WALL PANEL"
+  },
+  {
+    "Contractor_Name": "Alam Al-Maskan Establishment for Contracting",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Ahmed Hassouna",
+    "Email": "ahmed.hassouna@al-maskan.com",
+    "Mobile_Number": "0549444054",
+    "Building_Tech_Type": "EPS WALL PANEL",
+    "totalScore": 4.4
+  },
+  {
+    "Contractor_Name": "Nasser Mohammed bin Fahd Al-Obialny Establishment for Contracting",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Nasser Mohammed Al-Obialny",
+    "Email": "Nasser@alobialy.com",
+    "Mobile_Number": "0554118557",
+    "Building_Tech_Type": "EPS WALL PANEL"
+  },
+  {
+    "Contractor_Name": "Adva Contracting Company",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Southern",
+    "Contact_Person": "Yahya Al-Kariri",
+    "Email": "yahia@adfa.com.sa",
+    "Mobile_Number": "0564448555",
+    "Building_Tech_Type": "EPS WALL PANEL"
+  },
+  {
+    "Contractor_Name": "Oman Gas Company",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Ali Hassan Al-Masri",
+    "Email": "ali.hassan@oman-gas.com",
+    "Mobile_Number": "0545939257",
+    "Building_Tech_Type": "EPS WALL PANEL"
+  },
+  {
+    "Contractor_Name": "Al-Shaheen Metal Industries Company",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Mohamed Fawzy",
+    "Email": "mohamed.fawzy@alshahin.com.sa",
+    "Mobile_Number": "0547844081",
+    "Building_Tech_Type": "EPS WALL PANEL",
+    "totalScore": 3.9
+  },
+  {
+    "Contractor_Name": "Al-Arab Contracting Company",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Mohammed Hassan",
+    "Email": "M.hasan@alarab-sa.com",
+    "Mobile_Number": "0551000821",
+    "Building_Tech_Type": "EPS WALL PANEL"
+  },
+  {
+    "Contractor_Name": "Branch of Nemou Al-Enshaat Establishment for Contracting",
+    "Alliance_Company_Name": "Bawani Factory",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Yazeed Mohammed Al-Qahtani",
+    "Email": "Yazeed@Nemou.co",
+    "Mobile_Number": "0551730481",
+    "Building_Tech_Type": "EPS WALL PANEL",
+    "totalScore": 5.0
+  },
+  {
+    "Contractor_Name": "Bonyan Al-Madaen Contracting Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Arabian/Central",
+    "Contact_Person": "Eng. Mohammed Al-Masri",
+    "Email": "m.elmasry@bonyanalmadain.com",
+    "Mobile_Number": "0544999335",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)",
+    "totalScore": 4.4
+  },
+  {
+    "Contractor_Name": "Work Style Trading and Importing Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Central, Eastern",
+    "Contact_Person": "Mohammed Abdulrahman",
+    "Email": "m.abdulrahman@wo-sa.com",
+    "Mobile_Number": "0551785233",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)",
+    "totalScore": 4.3
+  },
+  {
+    "Contractor_Name": "Al-Hashimiah Contracting Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Eastern, Central",
+    "Contact_Person": "Ayman Al-Hashemi",
+    "Email": "ayman@alhashimiah.com",
+    "Mobile_Number": "0505888251",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)",
+    "totalScore": 3.7
+  },
+  {
+    "Contractor_Name": "Solb Al-Jazeera Contracting Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Eastern, Central",
+    "Contact_Person": "Eng. Abdullah Al-Hamoud",
+    "Email": "a.alhamoud@sj-con.com",
+    "Mobile_Number": "0547474720",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "Branch of Qudwah Dawrat Engineering Prefabricated Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Eastern, Central",
+    "Contact_Person": "Eng. Samer Dalati",
+    "Email": "s.dalati@qudwah-d.com",
+    "Mobile_Number": "0505851457",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "RDC El Seif Limited Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Ahmed Abdulrahman",
+    "Email": "aabdulrahman@rdc-elseif.com",
+    "Mobile_Number": "0543210100",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "Damac Contracting Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Central, Eastern, Western",
+    "Contact_Person": "Eng. Sameh Ibrahim",
+    "Email": "sameh.ibrahim@damacsa.com",
+    "Mobile_Number": "0548171095",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)",
+    "totalScore": 3.9
+  },
+  {
+    "Contractor_Name": "Al-Qasaba Contracting Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Eastern, Central",
+    "Contact_Person": "Eng. Fouad Al-Abdulkarim",
+    "Email": "Fouad@Al-Casaba.com",
+    "Mobile_Number": "0555845564",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)",
+    "totalScore": 4.4
+  },
+  {
+    "Contractor_Name": "Shajan Contracting Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Ibrahim",
+    "Email": "Ibrahim@shajan.com.sa",
+    "Mobile_Number": "0502288863",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "Mayasem Modern Constructions Contracting Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Ahmed Ali",
+    "Email": "a.ali@mayasem.com.sa",
+    "Mobile_Number": "0506306564",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "Practical Homes Buildings Contracting Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Western, Central",
+    "Contact_Person": "Fahd Al-Salmi",
+    "Email": "fahad@b-h-c.net",
+    "Mobile_Number": "0565651551",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "Mag Modern Establishment for Contracting",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Western",
+    "Contact_Person": "Eng. Omar Mohammed Badawood",
+    "Email": "omar@magcon.com.sa",
+    "Mobile_Number": "0504620063",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "Bawarith Establishment for Contracting",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Western, Central",
+    "Contact_Person": "Eng. Salem Bawarith",
+    "Email": "s.bawarith@bawarith.com.sa",
+    "Mobile_Number": "0500147723",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "Arabian Company for Construction Engineering",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Western, Central",
+    "Contact_Person": "Eng. Mohammed El-Sawy",
+    "Email": "m.elsawy@acec-sa.com",
+    "Mobile_Number": "0509653520",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "Jas International Contracting Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Eastern / Central",
+    "Contact_Person": "Eng. Abdullah Al-Yamani",
+    "Email": "a.alyamani@jas-int.com",
+    "Mobile_Number": "0503808460",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "Al-Orini Contracting Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Abdullah Al-Orini",
+    "Email": "a.orini@orini.com.sa",
+    "Mobile_Number": "0555477899",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "Mohammed Suleiman Al-Sedrah Establishment for Contracting",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Hossam El-Din Shehata",
+    "Email": "hossam@al-sedrah.com",
+    "Mobile_Number": "0555286461",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)",
+    "totalScore": 4.1
+  },
+  {
+    "Contractor_Name": "Nawader Al-Omran Establishment for General Contracting",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Southern",
+    "Contact_Person": "Ali Mohammed Al-Omari",
+    "Email": "nawader.alomran@gmail.com",
+    "Mobile_Number": "0505753063",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "Multi-Business Group Ltd.",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Eastern Central",
+    "Contact_Person": "Bader Al-Qadi",
+    "Email": "bader@multibusiness.com.sa",
+    "Mobile_Number": "0505904842",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)"
+  },
+  {
+    "Contractor_Name": "Najmat Al-Mabani Contracting Company",
+    "Alliance_Company_Name": "Arabian Company for Construction Engineering",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Emad Tawfiq",
+    "Email": "Emad@n-almadani.com",
+    "Mobile_Number": "0502928224",
+    "Building_Tech_Type": "Form Work (Light Weight Foam Concrete)",
+    "totalScore": 3.0
+  },
+  {
+    "Contractor_Name": "Takween Real Estate Co. Ltd.",
+    "Alliance_Company_Name": "Economic Building Systems Company",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Abdulrahman",
+    "Email": "abdulrahman@takween.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Tunnel Form"
+  },
+  {
+    "Contractor_Name": "Tamam Al-Enjaz Company",
+    "Alliance_Company_Name": "Economic Building Systems Company",
+    "Preferred_Region": "Central / Western",
+    "Contact_Person": "Mohammed",
+    "Email": "mohammed@tamam.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Tunnel Form"
+  },
+  {
+    "Contractor_Name": "Supply Support Company Ltd.",
+    "Alliance_Company_Name": "Economic Building Systems Company",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Abdullah",
+    "Email": "abdullah@supply.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Tunnel Form"
+  },
+  {
+    "Contractor_Name": "Al-Kifah Contracting",
+    "Alliance_Company_Name": "Al-Kifah",
+    "Preferred_Region": "Central / Eastern",
+    "Contact_Person": "Eng. Majed",
+    "Email": "majed@kifah.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Precast",
+    "totalScore": 4.2
+  },
+  {
+    "Contractor_Name": "Future Cities Contracting Company",
+    "Alliance_Company_Name": "Future Cities",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Khaled",
+    "Email": "khaled@future.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Precast"
+  },
+  {
+    "Contractor_Name": "Al-Fanar Company",
+    "Alliance_Company_Name": "Al-Fanar",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Saad",
+    "Email": "saad@alfanar.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Precast",
+    "totalScore": 4.5
+  },
+  {
+    "Contractor_Name": "Mounes Mohammed Al-Shayeb Civil Works Company \"MOBCO\"",
+    "Alliance_Company_Name": "MOBCO",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Ali",
+    "Email": "ali@mobco.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Precast"
+  },
+  {
+    "Contractor_Name": "Al-Rajhi Company for Construction and Development",
+    "Alliance_Company_Name": "Al-Rajhi",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Waleed",
+    "Email": "waleed@alrajhi.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Precast",
+    "totalScore": 2.8
+  },
+  {
+    "Contractor_Name": "Abdullah Mohammed Othman Al-Othman Establishment",
+    "Alliance_Company_Name": "Al-Othman",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Othman",
+    "Email": "othman@alothman.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Precast"
+  },
+  {
+    "Contractor_Name": "Black Horse Trading and Contracting Company",
+    "Alliance_Company_Name": "Black Horse",
+    "Preferred_Region": "Western / Central",
+    "Contact_Person": "Eng. Ahmed",
+    "Email": "ahmed@blackhorse.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Precast"
+  },
+  {
+    "Contractor_Name": "Thabat Construction Ltd.",
+    "Alliance_Company_Name": "Thabat",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Fahd",
+    "Email": "fahad@thabat.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Precast"
+  },
+  {
+    "Contractor_Name": "Emaar Al-Sharif Establishment",
+    "Alliance_Company_Name": "Emaar Al-Sharif",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Sherif",
+    "Email": "sherif@emaar.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Precast"
+  },
+  {
+    "Contractor_Name": "Al-Bawaker Establishment for Contracting",
+    "Alliance_Company_Name": "Al-Bawaker",
+    "Preferred_Region": "Central",
+    "Contact_Person": "Eng. Bakr",
+    "Email": "bakr@albawaker.com.sa",
+    "Mobile_Number": "0551730000",
+    "Building_Tech_Type": "Precast"
+  },
+  {
+    "Factory_Name": "Tripple Walls for trading and contracting (Emmedue)",
+    "Tech_Type": "Insulated Concrete Form (ICF)",
+    "Contact_Person": "Ibrahim El-Sokhon",
+    "Email": "i.el-sokhon@tripple-walls.com",
+    "Mobile_Number": "0553199990"
+  },
+  {
+    "Factory_Name": "Al Kathiri Holding (ALIAN INDUSTRY CO)",
+    "Tech_Type": "3D Concrete panels",
+    "Contact_Person": "Dr. Mohammad Alkathiri",
+    "Email": "info@alianindustry.com",
+    "Mobile_Number": "0550478179",
+    "totalScore": 4.4
+  },
+  {
+    "Factory_Name": "Dal Al-Tameer",
+    "Tech_Type": "Insulated Concrete Form (ICF)",
+    "Contact_Person": "Mohammad Noman",
+    "Email": "mnoman@dal.com.sa",
+    "Mobile_Number": "0544521029"
+  },
+  {
+    "Factory_Name": "AL SAEDAN FOR DEVELOPMENT AND TRADE",
+    "Tech_Type": "Insulated Concrete Form (ICF)",
+    "Contact_Person": "Feras Al Saedan",
+    "Email": "falsaedan@alsaedan.com",
+    "Mobile_Number": "0504100511"
+  },
+  {
+    "Factory_Name": "Saudi Forsah",
+    "Tech_Type": "Insulated Concrete Form (ICF)",
+    "Contact_Person": "Hani Alafaleq",
+    "Email": "h.alafaleq@alforsah.com",
+    "Mobile_Number": "0554101004"
+  },
+  {
+    "Factory_Name": "KINGHING Construction Technology Ltd",
+    "Tech_Type": "Insulated Concrete Form (ICF)",
+    "Contact_Person": "Fahad Alamri",
+    "Email": "Fahad.alamri@kinghing.com",
+    "Mobile_Number": "0505459341"
+  },
+  {
+    "Factory_Name": "SIPOREX",
+    "Tech_Type": "Lightweight Aerated Concrete",
+    "Contact_Person": "Nael Salah",
+    "Email": "n.salah@siporex.com.sa",
+    "Mobile_Number": "0549492211",
+    "totalScore": 3.6
+  },
+  {
+    "Factory_Name": "ESPAC",
+    "Tech_Type": "Lightweight Aerated Concrete",
+    "Contact_Person": "Dr. Nabil Al-Dkheayl",
+    "Email": "Nabil.D@espac.com",
+    "Mobile_Number": "0553110033",
+    "totalScore": 3.6
+  },
+  {
+    "Factory_Name": "Saudi ACC Factory",
+    "Tech_Type": "Lightweight Aerated Concrete",
+    "Contact_Person": "Fahad",
+    "Email": "fahad@saudi-acc.com",
+    "Mobile_Number": "0555232323",
+    "totalScore": 4.3
+  },
+  {
+    "Factory_Name": "Acico",
+    "Tech_Type": "Lightweight Aerated Concrete",
+    "Contact_Person": "Mazen Al-Ghunaim",
+    "Email": "m.alghunaim@acico.com.sa",
+    "Mobile_Number": "0555432123"
+  },
+  {
+    "Factory_Name": "Al Tahaluf Real Estate Co",
+    "Tech_Type": "Lightweight Concrete Panels",
+    "Contact_Person": "Saleh Al Habib",
+    "Email": "s.alhabib@altahaluf.com.sa",
+    "Mobile_Number": "0503433566",
+    "totalScore": 4.4
+  },
+  {
+    "Factory_Name": "(MA'AR GROUP) & (O-STABLE PANEL SDN. BHD.)",
+    "Tech_Type": "Lightweight Concrete Panels",
+    "Contact_Person": "Dr. Ammar Al-Hilal",
+    "Email": "A.alhilal@maargroup.com",
+    "Mobile_Number": "0554044434"
+  },
+  {
+    "Factory_Name": "Dawawen Company",
+    "Tech_Type": "Lightweight Concrete Panels",
+    "Contact_Person": "Saud Al-Arifi",
+    "Email": "s.alarifi@dawawen.com",
+    "Mobile_Number": "0554449911"
+  },
+  {
+    "Factory_Name": "Luca miro homes (Mahmood Saeed Company Limited)",
+    "Tech_Type": "Lightweight Concrete Panels",
+    "Contact_Person": "Dr. Ahmad Al-Zoubi",
+    "Email": "Ahmad.alzoubi@mahmoodsaeed.com",
+    "Mobile_Number": "0556611234"
+  },
+  {
+    "Factory_Name": "Ayan holding",
+    "Tech_Type": "Modular Building System",
+    "Contact_Person": "Abdullah Al-Qahtani",
+    "Email": "A.alqahtani@ayan.com.sa",
+    "Mobile_Number": "0505432123"
+  },
+  {
+    "Factory_Name": "katerra",
+    "Tech_Type": "Modular Building System",
+    "Contact_Person": "Ash Bhardwaj",
+    "Email": "Ash.bhardwaj@katerra.com",
+    "Mobile_Number": "0551234567"
+  },
+  {
+    "Factory_Name": "RW Modular",
+    "Tech_Type": "Modular Building System",
+    "Contact_Person": "Othman Al-Othman",
+    "Email": "o.alothman@rw-modular.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "AL MOBTY Contracting",
+    "Tech_Type": "Modular Building System",
+    "Contact_Person": "Abdullah Al-Mobty",
+    "Email": "a.almobty@almobty.com.sa",
+    "Mobile_Number": "0505123456"
+  },
+  {
+    "Factory_Name": "ACFA",
+    "Tech_Type": "Permanent Formwork",
+    "Contact_Person": "Waleed Al-Harkan",
+    "Email": "w.alharkan@acfa.com.sa",
+    "Mobile_Number": "0505654321"
+  },
+  {
+    "Factory_Name": "Masar Co",
+    "Tech_Type": "Permanent Formwork",
+    "Contact_Person": "Bandar Al-Humaidi",
+    "Email": "b.alhumaidi@masar.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.9
+  },
+  {
+    "Factory_Name": "PERI",
+    "Tech_Type": "Permanent Formwork",
+    "Contact_Person": "Islam Al-Toukhi",
+    "Email": "islam.eltoukhi@peri.com.sa",
+    "Mobile_Number": "0505123456",
+    "totalScore": 4.5
+  },
+  {
+    "Factory_Name": "Mackencore with (Al Tahaluf Real Estate Co)",
+    "Tech_Type": "Permanent Formwork",
+    "Contact_Person": "Fahad Al-Hammad",
+    "Email": "f.alhammad@mackencore.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Plastbau Arabia",
+    "Tech_Type": "Permanent Formwork",
+    "Contact_Person": "Dr. Ahmad Al-Jasser",
+    "Email": "a.aljasser@plastbauarabia.com",
+    "Mobile_Number": "0505123456"
+  },
+  {
+    "Factory_Name": "Almaskan World",
+    "Tech_Type": "Permanent Formwork",
+    "Contact_Person": "Ahmad Hassouna",
+    "Email": "a.hassouna@almaskanworld.com",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.4
+  },
+  {
+    "Factory_Name": "I.MAN Group (Emmedue)",
+    "Tech_Type": "Permanent Formwork",
+    "Contact_Person": "Iman Al-Ghamdi",
+    "Email": "i.alghamdi@imangroup.com",
+    "Mobile_Number": "0505123456"
+  },
+  {
+    "Factory_Name": "AB'z Invest",
+    "Tech_Type": "Permanent Formwork",
+    "Contact_Person": "Azzam Al-Zamil",
+    "Email": "a.alzamil@abzinvest.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Alaaly Factory for prefab Houses Co.",
+    "Tech_Type": "Permanent Formwork",
+    "Contact_Person": "Ali Al-Mutairi",
+    "Email": "a.almutairi@alaaly.com.sa",
+    "Mobile_Number": "0505123456"
+  },
+  {
+    "Factory_Name": "Albaydha Development Company (The Zovighian Partnership)",
+    "Tech_Type": "Rammed Earth",
+    "Contact_Person": "Lynn Zovighian",
+    "Email": "lynn@zovighian.com",
+    "Mobile_Number": "0501234567",
+    "totalScore": 3.8
+  },
+  {
+    "Factory_Name": "Advnced Resources Contracting",
+    "Tech_Type": "Sandwich panels",
+    "Contact_Person": "Omar Al-Amoudi",
+    "Email": "o.alamoudi@arc.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Sama Abha",
+    "Tech_Type": "Sandwich panels",
+    "Contact_Person": "Yahya Al-Qahtani",
+    "Email": "y.alqahtani@samaabha.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.0
+  },
+  {
+    "Factory_Name": "Unifab United Co.",
+    "Tech_Type": "Sandwich panels",
+    "Contact_Person": "Khaled Al-Dossary",
+    "Email": "k.aldossary@unifab.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Quadratics",
+    "Tech_Type": "Sandwich panels",
+    "Contact_Person": "Faisal Al-Saif",
+    "Email": "f.alsaif@quadratics.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "mayeer development",
+    "Tech_Type": "Sandwich panels",
+    "Contact_Person": "Mazen Al-Ghamdi",
+    "Email": "m.alghamdi@mayeer.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "powerwall Arabia",
+    "Tech_Type": "Sandwich panels",
+    "Contact_Person": "Sultan Al-Otaibi",
+    "Email": "s.alotaibi@powerwallarabia.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "pulse Properties",
+    "Tech_Type": "Sandwich panels",
+    "Contact_Person": "Nawaf Al-Jabr",
+    "Email": "n.aljabr@pulse.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "AdVnanced Construction Systems (ACS)",
+    "Tech_Type": "Sismo",
+    "Contact_Person": "Dr. Hossam Al-Husseiny",
+    "Email": "h.alhusseiny@acs-sa.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Builtek",
+    "Tech_Type": "Sismo",
+    "Contact_Person": "Mishal Al-Otaibi",
+    "Email": "m.alotaibi@builtek.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "ALDAMEGH FACTORY.",
+    "Tech_Type": "Sismo",
+    "Contact_Person": "Abdullah Al-Damegh",
+    "Email": "a.aldamegh@aldamegh.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "(MCC) Metallurgical Corporation of Chaina LTD",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Mr. Wang",
+    "Email": "wang@mcc.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Speed House",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Adnan Al-Khaldi",
+    "Email": "a.alkhaldi@speedhouse.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "Rashed Abdulrahman Alrashed&Sons.co.",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Rashed Al-Rashed",
+    "Email": "r.alrashed@alrashed.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "JSG. (BNBM Group (Part of CNBM) Poly International.CNKC) Tech#1",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Mr. Li",
+    "Email": "li@jsg.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Althamarat Company Faiz Mandurah",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Faiz Mandurah",
+    "Email": "f.mandurah@althamarat.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "Altamimi Group",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Tariq Al-Tamimi",
+    "Email": "t.altamimi@altamimigroup.com",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.2
+  },
+  {
+    "Factory_Name": "ALTAMIMI PEB",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Abdullah Al-Tamimi",
+    "Email": "a.altamimi@altamimipeb.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Badael Albena",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Saad Al-Qahtani",
+    "Email": "s.alqahtani@badaelalbena.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Mawten",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Eng. Raed Al-Awwad",
+    "Email": "r.alawwad@mawten.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "Anan Company",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Anan Al-Qahtani",
+    "Email": "a.alqahtani@anan.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Etehad Almomeroon",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Fahd Al-Mutairi",
+    "Email": "f.almutairi@etehadalmomeroon.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Solid Home Housing",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Khaled Al-Zamil",
+    "Email": "k.alzamil@solidhome.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Compact Habit Offsite Modular Buildings",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Mr. Juan",
+    "Email": "juan@compacthabit.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "KEF Holding",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Mr. Faizal",
+    "Email": "faizal@kefholding.com",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "UNIDCO Itd. Company",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Eng. Ibrahim Al-Babtain",
+    "Email": "i.albabtain@unidco.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "SIBCO",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Eng. Saad Al-Ghamdi",
+    "Email": "s.alghamdi@sibco.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "Alwatan Units (Jodran Al Watan)",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Eng. Abdullah Al-Harbi",
+    "Email": "a.alharbi@alwatanunits.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "SAUDI FACTORY FOR SWIFT CONSTRUCTION",
+    "Tech_Type": "Steel Frame",
+    "Contact_Person": "Eng. Saleh Al-Luhidan",
+    "Email": "s.alluhidan@sfsc.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 3.9
+  },
+  {
+    "Factory_Name": "BBR",
+    "Tech_Type": "Post-Tensioning",
+    "Contact_Person": "Eng. Ahmad Al-Khatib",
+    "Email": "a.alkhatib@bbr.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.3
+  },
+  {
+    "Factory_Name": "Mantis Prestrressed concrete",
+    "Tech_Type": "Post-Tensioning",
+    "Contact_Person": "Eng. Omar Al-Dossary",
+    "Email": "o.aldossary@mantis.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Union Gulf Prestressing llc",
+    "Tech_Type": "Post-Tensioning",
+    "Contact_Person": "Eng. Ali Al-Mansour",
+    "Email": "a.almansour@ugp.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "AlFanar",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Abdulaziz Al-Sudais",
+    "Email": "a.alsudais@alfanar.com",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.5
+  },
+  {
+    "Factory_Name": "Sarh Altaqniah",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Abdullah Al-Otaibi",
+    "Email": "a.alotaibi@sarhaltaqniah.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Sany",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Mr. Zhang",
+    "Email": "zhang@sany.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "Elcon",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Mohammad Al-Rashid",
+    "Email": "m.alrashid@elcon.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "Al-Rashed Abetong",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Fawaz Al-Rashed",
+    "Email": "f.alrashed@alrashedabetong.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.0
+  },
+  {
+    "Factory_Name": "BAWAN Factory",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Saleh Al-Salamah",
+    "Email": "s.alsalamah@bawan.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.0
+  },
+  {
+    "Factory_Name": "AlKifah Precast",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Khalid Al-Afaleq",
+    "Email": "k.alafaleq@alkifah.com",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "Kobaisi Building Systems (KBS)",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Abdullah Al-Kobaisi",
+    "Email": "a.alkobaisi@kbs.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "RANCO-Zamil",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Zamil Al-Zamil",
+    "Email": "z.alzamil@ranco-zamil.com",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "Al Abniah Precast Building Factory",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Saad Al-Ghamdi",
+    "Email": "s.alghamdi@alabniah.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "POWERCHINA SA&BH",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Mr. Chen",
+    "Email": "chen@powerchina.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Qanbar Dywidag Precast",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Mohammad Al-Qanbar",
+    "Email": "m.alqanbar@qdc.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "DALAEL ALAAMAL PROPERT CO",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Faisal Al-Mutlaq",
+    "Email": "f.almutlaq@dalael.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Shibh Al-Jazira Contracting Co.",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Ziad Al-Haj",
+    "Email": "z.alhaj@sajco.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "Gwaem Precast Concrete ( GPC )",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Abdulaziz Al-Sudais",
+    "Email": "a.alsudais@gpc.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 5.0
+  },
+  {
+    "Factory_Name": "Al Casaba for Building Material",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Fouad Al-Abdulkarim",
+    "Email": "f.alabdulkarim@alcasaba.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Shabh Aljazerah Precast",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Mohammad Al-Shammari",
+    "Email": "m.alshammari@saprecast.com",
+    "Mobile_Number": "0501234567",
+    "totalScore": 3.0
+  },
+  {
+    "Factory_Name": "PREMCO PRECAST",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Saleh Al-Habib",
+    "Email": "s.alhabib@premco.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Al-marshad Group",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Abdullah Al-Marshad",
+    "Email": "a.almarshad@almarshadgroup.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Alrasheed Elcon Precast",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Fawaz Al-Rasheed",
+    "Email": "f.alrasheed@alrasheedelcon.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "RDB-ELSEIF Co",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Khaled Al-Saif",
+    "Email": "k.alsaif@rdb-elseif.com",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.2
+  },
+  {
+    "Factory_Name": "ESPAC PRECAST AERATED CONCRETE",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Dr. Nabil Al-Dkheayl",
+    "Email": "n.aldkheayl@espac.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Sany Alameriah",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Mr. Zhang",
+    "Email": "zhang@sanyalameriah.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Ali Shaar",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Ali Shaar",
+    "Email": "a.shaar@alishaar.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "Orak Factory",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Abdullah Al-Orak",
+    "Email": "a.alorak@orakfactory.com",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.0
+  },
+  {
+    "Factory_Name": "Jazeera Freecast",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Mohammad Al-Jazeera",
+    "Email": "m.aljazeera@jazeeraprecast.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "MHC ( Soliman BIn Saleh AL-Mohaleb&Sons Holding CO.)",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Soliman Al-Mohaleb",
+    "Email": "s.almohaleb@mhc.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.0
+  },
+  {
+    "Factory_Name": "Ebrahim Z. Alrefaei International Co. Ltd.",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Ebrahim Al-Refaei",
+    "Email": "e.alrefaei@alrefaei.com",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "MODERN SAKANN INDUSTRIAL CO.",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Abdulaziz Al-Babtain",
+    "Email": "a.albabtain@modernsakann.com",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.3
+  },
+  {
+    "Factory_Name": "STELLAR BUILDING SYSTEM",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Faisal Al-Zamil",
+    "Email": "f.alzamil@stellar.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.0
+  },
+  {
+    "Factory_Name": "Astra Construction",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Sabih Al-Masri",
+    "Email": "s.almasri@astra.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "Alshahin Metal Industries",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Mohammad Fawzy",
+    "Email": "m.fawzy@alshahin.com.sa",
+    "Mobile_Number": "0501234567",
+    "totalScore": 3.9
+  },
+  {
+    "Factory_Name": "International For Modern Torque Panels",
+    "Tech_Type": "Precast Concrete",
+    "Contact_Person": "Eng. Abdullah Al-Mutlaq",
+    "Email": "a.almutlaq@imtp.com.sa",
+    "Mobile_Number": "0501234567"
+  },
+  {
+    "Factory_Name": "DOKA",
+    "Tech_Type": "Tunnel form",
+    "Contact_Person": "Ibrahim Elsayed",
+    "Email": "Ibrahim.elsayed@doka.com",
+    "Mobile_Number": "0500121639",
+    "totalScore": 4.4
+  },
+  {
+    "Factory_Name": "kayanat united",
+    "Tech_Type": "Tunnel form",
+    "Contact_Person": "Waleed Elgohary",
+    "Email": "waleed.elgohary@kayanat.com.sa",
+    "Mobile_Number": "0508535492"
+  },
+  {
+    "Factory_Name": "Alrashid Real Estate (Artar)",
+    "Tech_Type": "Tunnel form",
+    "Contact_Person": "Iyad Atasy",
+    "Email": "i.atassi@artar.com.sa",
+    "Mobile_Number": "0556766776",
+    "totalScore": 4.2
+  },
+  {
+    "Factory_Name": "Green Falcon Holding",
+    "Tech_Type": "Tunnel Formwork",
+    "Contact_Person": "Mohammed Haji",
+    "Email": "www.greenfalconholding.com",
+    "Mobile_Number": "0504223737",
+    "totalScore": 4.0
+  },
+  {
+    "Factory_Name": "Modern Archicture Path",
+    "Tech_Type": "Tunnel Formwork",
+    "Contact_Person": "Wael Zaki",
+    "Email": "wzaki@modern-archpath.com",
+    "Mobile_Number": "0592964445"
+  },
+  {
+    "Factory_Name": null,
+    "Tech_Type": "Waffle‐Crete building system (precast concrete panels for wall & slab)",
+    "Contact_Person": "Naser Alsharif",
+    "Email": "naser.0551211@gmail.com",
+    "Mobile_Number": "0551211803"
+  },
+  {
+    "Factory_Name": "Speedco",
+    "Tech_Type": "Waffle‐Crete building system (precast concrete panels for wall & slab)",
+    "Contact_Person": "Hani Al Salami",
+    "Email": "h.alsalami@speedco-group.com",
+    "Mobile_Number": "0543202244",
+    "totalScore": 4.1
+  },
+  {
+    "Factory_Name": "Fasker Resources Technology LLC",
+    "Tech_Type": "Waffle‐Crete building system (precast concrete panels for wall & slab)",
+    "Contact_Person": "Abdullah AL Othaim",
+    "Email": "a.alothaim@fasker.com.sa",
+    "Mobile_Number": "0533333633"
+  },
+  {
+    "Factory_Name": "TAWAQ TRADING CO.",
+    "Tech_Type": "Waffle‐Crete building system (precast concrete panels for wall & slab)",
+    "Contact_Person": "ABDULAZIZ A. AL-MOHSEN",
+    "Email": "almohsen@tawaq.com",
+    "Mobile_Number": "0505413151"
+  }
+]
