@@ -242,6 +242,6 @@ if __name__ == '__main__':
     # Load model on startup
     if load_model():
         # Run the Flask app
-        app.run(host='0.0.0.0', port=5173, debug=True)
+        app.run(host='0.0.0.0', port=5000, debug=True)
     else:
         print("❌ Failed to load model. Please ensure the model file exists.")
