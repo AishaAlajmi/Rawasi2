@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { LogOut, User, Settings } from "lucide-react";
-import rawasiLogo from "../assets/photo_2025-08-13_21-03-51.jpg";
+import rawasiLogo from "../assets/photo_2025-08-13_21-03-51.png";
 import { useLang } from "../context/lang";
 import { supabase } from "../lib/supabase";
 

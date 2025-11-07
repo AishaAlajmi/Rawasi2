@@ -1,140 +1,327 @@
-// src/lib/aiModelService.js
-// Service to interact with the AI model API
-
-const API_BASE_URL =
-  import.meta.env.VITE_MODEL_API_URL || "http://localhost:5000";
+// src/lib/aiModelService.js - ML Model Integration
 /**
- * Predict project cost using the trained AI model
- * @param {Object} projectData - Project information
- * @returns {Promise<Object>} - Prediction results
+ * AI Model Service
+ * Connects React frontend to Flask ML model API for cost predictions
  */
-export async function predictProjectCost(projectData) {
+
+const MODEL_API_URL = import.meta.env.VITE_MODEL_API_URL || 'http://localhost:5000';
+
+/**
+ * Predict project cost using the trained ML model
+ * @param {Object} project - Project details
+ * @returns {Promise<Object>} Prediction results
+ */
+export async function predictProjectCost(project) {
   try {
-    const response = await fetch(`${API_BASE_URL}/predict`, {
+    console.log('🤖 Calling ML Model API for cost prediction...');
+    console.log('📊 Project data:', project);
+
+    // Prepare request data matching the model API format
+    const requestData = {
+      project_type: project.type || 'Residential',
+      size_sqm: parseFloat(project.sizeSqm) || 1500,
+      location: project.location || 'Riyadh',
+      timeline_months: parseInt(project.timelineMonths) || 12,
+      rate_sar_m2: 750.0 // Default construction rate - can be made dynamic
+    };
+
+    console.log('📤 Sending to model:', requestData);
+
+    // Call the model API
+    const response = await fetch(`${MODEL_API_URL}/predict`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        project_type: projectData.type,
-        size_sqm: projectData.sizeSqm,
-        location: projectData.location,
-        timeline_months: projectData.timelineMonths,
-        rate_sar_m2: calculateRateSarM2(projectData)
-      }),
+      body: JSON.stringify(requestData),
     });
 
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `Model API returned ${response.status}`);
     }
 
     const result = await response.json();
-    return result;
+    console.log('✅ Model prediction received:', result);
+
+    if (!result.success) {
+      throw new Error(result.error || 'Prediction failed');
+    }
+
+    // Return the prediction in the format expected by the frontend
+    return {
+      success: true,
+      predicted_cost: result.predicted_cost,
+      confidence_interval: {
+        lower: result.confidence_interval.lower,
+        upper: result.confidence_interval.upper
+      },
+      cost_per_sqm: result.cost_per_sqm,
+      model_inputs: result.inputs,
+      timestamp: new Date().toISOString()
+    };
+
   } catch (error) {
-    console.error('Error predicting project cost:', error);
-    throw error;
+    console.error('❌ Model prediction error:', error);
+    
+    // Return error with fallback
+    return {
+      success: false,
+      error: error.message,
+      fallback_estimate: calculateFallbackEstimate(project),
+      timestamp: new Date().toISOString()
+    };
   }
 }
 
 /**
- * Calculate rate per square meter based on project characteristics
- * This is a helper function to estimate the rate if not provided
+ * Batch predict costs for multiple projects
+ * @param {Array<Object>} projects - Array of project details
+ * @returns {Promise<Object>} Batch prediction results
  */
-function calculateRateSarM2(project) {
-  // Base rates by project type (SAR per sqm)
+export async function batchPredictProjectCosts(projects) {
+  try {
+    console.log(`🤖 Batch predicting costs for ${projects.length} projects...`);
+
+    const requestProjects = projects.map(project => ({
+      project_type: project.type || 'Residential',
+      size_sqm: parseFloat(project.sizeSqm) || 1500,
+      location: project.location || 'Riyadh',
+      timeline_months: parseInt(project.timelineMonths) || 12,
+      rate_sar_m2: 750.0
+    }));
+
+    const response = await fetch(`${MODEL_API_URL}/batch-predict`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ projects: requestProjects }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Model API returned ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('✅ Batch predictions received');
+
+    return {
+      success: true,
+      predictions: result.predictions,
+      timestamp: new Date().toISOString()
+    };
+
+  } catch (error) {
+    console.error('❌ Batch prediction error:', error);
+    return {
+      success: false,
+      error: error.message,
+      timestamp: new Date().toISOString()
+    };
+  }
+}
+
+/**
+ * Check if the model API is healthy
+ * @returns {Promise<Object>} Health check result
+ */
+export async function checkModelHealth() {
+  try {
+    const response = await fetch(`${MODEL_API_URL}/health`, {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error('Model API is not responding');
+    }
+
+    const result = await response.json();
+    console.log('✅ Model API health check:', result);
+
+    return {
+      success: true,
+      status: result.status,
+      model_loaded: result.model_loaded,
+      api_url: MODEL_API_URL
+    };
+
+  } catch (error) {
+    console.error('❌ Model health check failed:', error);
+    return {
+      success: false,
+      error: error.message,
+      api_url: MODEL_API_URL
+    };
+  }
+}
+
+/**
+ * Fallback cost estimation when model is unavailable
+ * @param {Object} project - Project details
+ * @returns {number} Estimated cost
+ */
+function calculateFallbackEstimate(project) {
+  // Simple rule-based estimation
   const baseRates = {
-    'Residential': 750,
-    'Commercial': 900,
-    'Industrial': 600,
-    'Mixed-Use': 850
+    'Residential': 3500,
+    'Commercial': 4500,
+    'Industrial': 3800,
+    'Mixed-Use': 4200
   };
 
-  let rate = baseRates[project.type] || 750;
-
-  // Adjust based on location (rough estimates)
-  const locationMultipliers = {
-    'Riyadh': 1.0,
-    'Jeddah': 0.95,
-    'Dammam': 0.9,
-    'Mecca': 1.05,
-    'Medina': 1.0
-  };
-
-  rate *= locationMultipliers[project.location] || 1.0;
-
-  // Adjust based on complexity (if you have it)
-  const complexityMultipliers = {
-    'low': 0.9,
-    'medium': 1.0,
-    'high': 1.15
-  };
-
-  rate *= complexityMultipliers[project.complexity] || 1.0;
-
-  // Adjust based on selected technologies (premium tech = higher rate)
-  if (project.techNeeds && project.techNeeds.length > 0) {
-    const premiumTechs = ['BIM', 'Prefabrication', '3D panel system (M2)', 'Modular LGS'];
-    const hasPremiumTech = project.techNeeds.some(tech => premiumTechs.includes(tech));
-    if (hasPremiumTech) {
-      rate *= 1.1;
-    }
-  }
-
-  return Math.round(rate);
+  const baseRate = baseRates[project.type] || 4000;
+  const sizeSqm = parseFloat(project.sizeSqm) || 1500;
+  
+  // Add complexity factor based on timeline
+  const timelineMonths = parseInt(project.timelineMonths) || 12;
+  const urgencyMultiplier = timelineMonths < 10 ? 1.15 : 1.0;
+  
+  const estimatedCost = baseRate * sizeSqm * urgencyMultiplier;
+  
+  return Math.round(estimatedCost);
 }
 
 /**
- * Batch predict multiple projects
- * @param {Array} projects - Array of project data
- * @returns {Promise<Object>} - Batch prediction results
+ * Get cost breakdown by project phase
+ * @param {number} totalCost - Total project cost
+ * @param {string} projectType - Type of project
+ * @returns {Object} Cost breakdown
  */
-export async function batchPredictProjects(projects) {
-  try {
-    const response = await fetch(`${API_BASE_URL}/batch-predict`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        projects: projects.map(p => ({
-          project_type: p.type,
-          size_sqm: p.sizeSqm,
-          location: p.location,
-          timeline_months: p.timelineMonths,
-          rate_sar_m2: calculateRateSarM2(p)
-        }))
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+export function getCostBreakdown(totalCost, projectType) {
+  // Typical cost distribution percentages
+  const distributions = {
+    'Residential': {
+      design: 0.05,
+      foundation: 0.15,
+      structure: 0.35,
+      finishing: 0.30,
+      mep: 0.15
+    },
+    'Commercial': {
+      design: 0.08,
+      foundation: 0.12,
+      structure: 0.30,
+      finishing: 0.25,
+      mep: 0.25
+    },
+    'Industrial': {
+      design: 0.06,
+      foundation: 0.18,
+      structure: 0.40,
+      finishing: 0.20,
+      mep: 0.16
+    },
+    'Mixed-Use': {
+      design: 0.07,
+      foundation: 0.14,
+      structure: 0.33,
+      finishing: 0.28,
+      mep: 0.18
     }
+  };
 
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('Error in batch prediction:', error);
-    throw error;
-  }
+  const dist = distributions[projectType] || distributions['Residential'];
+  
+  return {
+    design: Math.round(totalCost * dist.design),
+    foundation: Math.round(totalCost * dist.foundation),
+    structure: Math.round(totalCost * dist.structure),
+    finishing: Math.round(totalCost * dist.finishing),
+    mep: Math.round(totalCost * dist.mep),
+    total: totalCost
+  };
 }
 
 /**
- * Check API health
- * @returns {Promise<Object>} - Health status
+ * Calculate timeline estimate based on project size and cost
+ * @param {Object} project - Project details
+ * @param {number} predictedCost - Predicted project cost
+ * @returns {Object} Timeline estimates
  */
-export async function checkAPIHealth() {
+export function calculateTimelineEstimate(project, predictedCost) {
+  const sizeSqm = parseFloat(project.sizeSqm) || 1500;
+  
+  // Base timeline calculation (months per 1000 sqm)
+  const baseMonthsPer1000Sqm = 6;
+  const estimatedMonths = Math.ceil((sizeSqm / 1000) * baseMonthsPer1000Sqm);
+  
+  // Add buffer based on project complexity
+  const complexityBuffer = {
+    'Residential': 1.0,
+    'Commercial': 1.2,
+    'Industrial': 1.15,
+    'Mixed-Use': 1.25
+  };
+  
+  const multiplier = complexityBuffer[project.type] || 1.0;
+  const adjustedMonths = Math.round(estimatedMonths * multiplier);
+  
+  return {
+    estimated_months: adjustedMonths,
+    min_months: Math.max(adjustedMonths - 2, 6),
+    max_months: adjustedMonths + 3,
+    phases: {
+      design: Math.ceil(adjustedMonths * 0.15),
+      procurement: Math.ceil(adjustedMonths * 0.10),
+      construction: Math.ceil(adjustedMonths * 0.65),
+      finishing: Math.ceil(adjustedMonths * 0.10)
+    }
+  };
+}
+
+/**
+ * Test the model connection
+ * @returns {Promise<Object>} Test result
+ */
+export async function testModelConnection() {
   try {
-    const response = await fetch(`${API_BASE_URL}/health`);
-    const result = await response.json();
-    return result;
+    console.log('🔧 Testing ML Model API connection...');
+    
+    // Test health endpoint
+    const health = await checkModelHealth();
+    
+    if (!health.success) {
+      return {
+        success: false,
+        error: 'Health check failed',
+        details: health
+      };
+    }
+
+    // Test prediction with sample data
+    const testProject = {
+      type: 'Residential',
+      sizeSqm: 1500,
+      location: 'Riyadh',
+      timelineMonths: 12
+    };
+
+    const prediction = await predictProjectCost(testProject);
+    
+    return {
+      success: prediction.success,
+      health_check: health,
+      sample_prediction: prediction,
+      message: prediction.success 
+        ? '✅ Model API is working correctly!'
+        : '⚠️ Model API responded but prediction failed'
+    };
+
   } catch (error) {
-    console.error('Error checking API health:', error);
-    return { status: 'unhealthy', error: error.message };
+    return {
+      success: false,
+      error: error.message,
+      message: '❌ Could not connect to Model API'
+    };
   }
 }
 
 export default {
   predictProjectCost,
-  batchPredictProjects,
-  checkAPIHealth
+  batchPredictProjectCosts,
+  checkModelHealth,
+  getCostBreakdown,
+  calculateTimelineEstimate,
+  testModelConnection
 };

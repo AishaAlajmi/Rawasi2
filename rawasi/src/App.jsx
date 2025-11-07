@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
-import rawasiLogo from "./assets/photo_2025-08-13_21-03-51.jpg";
+import rawasiLogo from "./assets/photo_2025-08-13_21-03-51.png";
 
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
@@ -9,7 +9,6 @@ import FlowProgress from "./components/Progress.jsx"; // NEW
 import Landing from "./pages/Landing.jsx";
 import Project from "./pages/Project.jsx";
 import Recommendations from "./pages/Recommendations.jsx";
-import Compare from "./pages/Compare.jsx";
 import Messages from "./pages/Messages.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Login from "./pages/auth/Login.jsx";
@@ -21,13 +20,10 @@ import { seedUsers } from "./lib/auth.js";
 // ---- Guards ---------------------------------------------------------------
 const RequireProject = ({ project, children }) =>
   project ? children : <Navigate to="/project" replace />;
-const RequireCompare = ({ compare, children }) =>
-  compare?.length ? children : <Navigate to="/recs" replace />;
 
 export default function App() {
   // project flow
   const [project, setProject] = useState(null);
-  const [compare, setCompare] = useState([]);
 
   // auth
   const [users, setUsers] = useState(() => loadLS("rawasi_users", seedUsers()));
@@ -41,13 +37,8 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const onCompareToggle = (id) =>
-    setCompare((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id].slice(-3)
-    );
-
   // show progress only on flow routes (not on Landing or Dashboard)
-  const showFlowProgress = ["/project", "/recs", "/compare", "/messages"].some(
+  const showFlowProgress = ["/project", "/recs", "/messages"].some(
     (p) => location.pathname.startsWith(p)
   );
 
@@ -87,7 +78,6 @@ export default function App() {
       <Header logoUrl={rawasiLogo} auth={auth} onLogout={logout} />
 
       <main className="mx-auto max-w-7xl px-4 pt-2">
-        {/* PROGRESS BAR — only on flow routes; Recommendations covers /recs & /compare */}
         {showFlowProgress && <FlowProgress />}
 
         <Routes>
@@ -117,27 +107,11 @@ export default function App() {
               <RequireProject project={project}>
                 <Recommendations
                   project={project}
-                  selectedCompare={compare}
-                  onCompareToggle={onCompareToggle}
-                  onProceed={() => compare.length && navigate("/compare")}
-                />
+                    />
               </RequireProject>
             }
           />
-          <Route
-            path="/compare"
-            element={
-              <RequireProject project={project}>
-                <RequireCompare compare={compare}>
-                  <Compare
-                    selectedIds={compare}
-                    project={project}
-                    onProceed={() => navigate("/messages")}
-                  />
-                </RequireCompare>
-              </RequireProject>
-            }
-          />
+         
         <Route path="/messages" element={<Messages onProceed={() => navigate("/dashboard")} />} />
 
 

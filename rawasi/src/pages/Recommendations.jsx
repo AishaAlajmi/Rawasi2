@@ -412,13 +412,7 @@ export default function Recommendations({
                   </p>
                 </div>
               </div>
-              <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-purple-50 backdrop-blur-sm rounded-xl border border-blue-200">
-                <Brain className="h-4 w-4 text-blue-700" />
-                <span className="text-sm font-medium text-blue-900">
-                  LLM Powered
-                </span>
-              </div>
-            </div>
+           </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {topPicks.map((provider, index) => (

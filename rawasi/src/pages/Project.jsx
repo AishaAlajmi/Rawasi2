@@ -133,7 +133,6 @@ function QuickPreferencesSidebar({ answers, setAnswers }) {
             }
             hint="Indicates a preference for flexible wall systems."
           />
-
           <CheckboxRow
             label="Water protection"
             checked={answers.needWater === "Yes"}
@@ -154,14 +153,6 @@ function QuickPreferencesSidebar({ answers, setAnswers }) {
 function LiveEstimator({ est, aiPrediction, isLoadingAI }) {
   const { estCost, estTimeMonths } = est;
 
-  // Debug logging
-  console.log('💡 LiveEstimator received:', {
-    isLoadingAI,
-    aiPredictionSuccess: aiPrediction?.success,
-    predictedCost: aiPrediction?.predicted_cost,
-    fallbackCost: estCost
-  });
-
   return (
     <motion.div
       key="estimator"
@@ -175,9 +166,8 @@ function LiveEstimator({ est, aiPrediction, isLoadingAI }) {
         <Calculator className="h-5 w-5" /> Live Project Estimate
       </div>
 
-      {/* ML Model Prediction Section */}
+      {/* AI Prediction Section */}
       {isLoadingAI ? (
-        // Loading State
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -185,11 +175,10 @@ function LiveEstimator({ est, aiPrediction, isLoadingAI }) {
         >
           <div className="flex items-center justify-center gap-2 text-orange-600">
             <Loader2 className="h-5 w-5 animate-spin" />
-            <span className="text-sm font-medium">🤖 ML Model is analyzing...</span>
+            <span className="text-sm font-medium">AI is analyzing...</span>
           </div>
         </motion.div>
       ) : aiPrediction?.success ? (
-        // SUCCESS: Show ML Model Prediction
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -197,81 +186,50 @@ function LiveEstimator({ est, aiPrediction, isLoadingAI }) {
         >
           <div className="rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 p-4 border-2 border-amber-200">
             <div className="flex items-center gap-2 mb-2">
-              <Brain className="h-4 w-4 text-amber-600" />
+              <Sparkles className="h-4 w-4 text-amber-600" />
               <span className="text-xs font-semibold text-amber-700 uppercase">
-                ML Model Prediction
+                AI Prediction
               </span>
             </div>
-            <div className="text-3xl font-extrabold text-amber-600">
+            <div className="text-2xl font-extrabold text-amber-600">
               {currency(aiPrediction.predicted_cost)}
             </div>
-            <div className="text-xs text-slate-600 mt-2 space-y-1">
-              <div>
-                <strong>Range:</strong> {currency(aiPrediction.confidence_interval.lower)} - {currency(aiPrediction.confidence_interval.upper)}
-              </div>
-              <div>
-                <strong>Cost per sqm:</strong> {currency(aiPrediction.cost_per_sqm)}/m²
-              </div>
+            <div className="text-xs text-slate-600 mt-1">
+              Range: {currency(aiPrediction.confidence_interval.lower)} -{" "}
+              {currency(aiPrediction.confidence_interval.upper)}
             </div>
-          </div>
-
-          {/* Estimated Time */}
-          <div className="rounded-xl bg-white p-3 text-center shadow-md border border-orange-100">
-            <div className="text-slate-600 font-medium text-sm">Estimated Time</div>
-            <div className="mt-1 text-xl font-extrabold text-orange-600">
-              {estTimeMonths} mo
+            <div className="text-xs text-slate-500 mt-2">
+              Cost per sqm: {currency(aiPrediction.cost_per_sqm)}/m²
             </div>
           </div>
         </motion.div>
       ) : (
-        // FALLBACK: ML Model unavailable, show basic estimate
-        <div className="mt-4 space-y-3">
-          {aiPrediction?.error && (
-            <div className="rounded-xl bg-amber-50 border border-amber-200 p-3">
-              <div className="flex items-center gap-2 text-amber-700 text-xs">
-                <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                <span>ML Model unavailable - showing basic estimate</span>
-              </div>
+        <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.1, type: "spring", stiffness: 150 }}
+            className="rounded-xl bg-white p-4 text-center shadow-md border border-orange-100"
+          >
+            <div className="text-slate-600 font-medium">Estimated Cost</div>
+            <div className="mt-1 text-xl font-extrabold text-orange-600 text-nowrap">
+              {currency(estCost)}
             </div>
-          )}
+          </motion.div>
 
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.1, type: "spring", stiffness: 150 }}
-              className="rounded-xl bg-white p-4 text-center shadow-md border border-orange-100"
-            >
-              <div className="text-slate-600 font-medium">Estimated Cost</div>
-              <div className="mt-1 text-xl font-extrabold text-orange-600">
-                {currency(estCost)}
-              </div>
-              <div className="text-xs text-slate-500 mt-1">Rule-based</div>
-            </motion.div>
-
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 150 }}
-              className="rounded-xl bg-white p-4 text-center shadow-md border border-orange-100"
-            >
-              <div className="text-slate-600 font-medium">Estimated Time</div>
-              <div className="mt-1 text-xl font-extrabold text-orange-600">
-                {estTimeMonths} mo
-              </div>
-            </motion.div>
-          </div>
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 150 }}
+            className="rounded-xl bg-white p-4 text-center shadow-md border border-orange-100"
+          >
+            <div className="text-slate-600 font-medium">Estimated Time</div>
+            <div className="mt-1 text-xl font-extrabold text-orange-600 text-nowrap">
+              {estTimeMonths} mo
+            </div>
+          </motion.div>
         </div>
       )}
-
-      <div className="mt-4 col-span-2">
-        <ul className="list-inside text-sm text-slate-600 space-y-1">
-          <li className="flex items-start gap-2">
-            <span className="text-orange-500">•</span> Adjust your details in
-            the form to see the live impact here.
-          </li>
-        </ul>
-      </div>
 
       <div className="mt-6 border-t pt-4 border-orange-100">
         <div className="text-sm font-semibold text-slate-700 mb-3">
@@ -339,9 +297,8 @@ function ProjectWizard({ onComplete }) {
     budget: 2000000,
     timelineMonths: 12,
     Nfloors: 2,
-    complexity: "medium",
     techNeeds: [],
-    planImageFile: null,
+    planImageFile: { name: "" },
     planImagePreview: "",
   });
 
@@ -364,13 +321,13 @@ function ProjectWizard({ onComplete }) {
     [project]
   );
 
-  // Fetch ML Model prediction when project changes (with debounce)
+  // Fetch AI prediction when project changes (with debounce)
   useEffect(() => {
     const timer = setTimeout(() => {
       if (project.name && project.sizeSqm > 0 && project.timelineMonths > 0) {
         fetchAIPrediction();
       }
-    }, 500); // 500ms debounce
+    }, 500); // Debounce 500ms
 
     return () => clearTimeout(timer);
   }, [
@@ -379,24 +336,16 @@ function ProjectWizard({ onComplete }) {
     project.location,
     project.timelineMonths,
     project.techNeeds,
-    project.complexity,
   ]);
 
   const fetchAIPrediction = async () => {
     setIsLoadingAI(true);
-    console.log('🤖 Fetching ML Model prediction...');
-    
     try {
       const prediction = await predictProjectCost(project);
-      console.log('✅ ML Model prediction received:', prediction);
       setAiPrediction(prediction);
     } catch (error) {
-      console.error("❌ Failed to get ML Model prediction:", error);
-      setAiPrediction({ 
-        success: false, 
-        error: error.message,
-        fallback_estimate: estCost
-      });
+      console.error("Failed to get AI prediction:", error);
+      setAiPrediction({ success: false, error: error.message });
     } finally {
       setIsLoadingAI(false);
     }
@@ -426,152 +375,17 @@ function ProjectWizard({ onComplete }) {
   const submit = async () => {
     setError("");
     setIsSubmitting(true);
-
     try {
-      // Step 1: Get current user
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError || !user) {
-        setError("You must be logged in to create a project");
-        setIsSubmitting(false);
-        return;
-      }
-
-      // Step 2: Get provider recommendations from Python API
-      console.log("🔍 Getting provider recommendations from LLM...");
-      let recommendations = null;
-
-      try {
-        const recommendationData = {
-          name: project.name,
-          type: project.type,
-          location: project.location,
-          sizeSqm: project.sizeSqm,
-          budget: project.budget,
-          timelineMonths: project.timelineMonths,
-          Nfloors: project.Nfloors,
-          techNeeds: project.techNeeds,
-          complexity: project.complexity,
-          planImage: project.planImagePreview,
-          preferences: answers,
-        };
-
-        const API_URL =
-          import.meta.env.VITE_RECOMMENDATION_API_URL ||
-          "http://localhost:5000/api";
-
-        console.log("📡 Calling recommendation API:", API_URL);
-        const response = await fetch(`${API_URL}/recommend`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(recommendationData),
-        });
-
-        if (response.ok) {
-          recommendations = await response.json();
-          console.log("✅ Recommendations received:", recommendations);
-
-          if (
-            recommendations.success &&
-            recommendations.suppliers?.length > 0
-          ) {
-            console.log(
-              `✨ Found ${recommendations.suppliers.length} matching providers!`
-            );
-          }
-        } else {
-          console.warn(
-            "⚠️ Recommendation API returned error:",
-            response.status
-          );
-        }
-      } catch (recError) {
-        console.error("⚠️ Recommendation API error:", recError);
-      }
-
-      // Step 3: Prepare project data for database
-      const projectData = {
-        user_id: user.id,
-        name: project.name,
-        type: project.type,
-        location: project.location,
-        size_sqm: project.sizeSqm,
-        n_floors: project.Nfloors,
-        budget: project.budget,
-        timeline_months: project.timelineMonths,
-        tech_needs: project.techNeeds || [],
-        want_speed: answers.wantSpeed,
-        need_insulation: answers.needInsulation,
-        need_quiet: answers.needQuiet,
-        need_fire: answers.needFire,
-        plan_changes: answers.planChanges,
-        need_water: answers.needWater,
-        ai_prediction: aiPrediction || null,
-        recommendations: recommendations || null,
-        status: "planning",
-        phase: "Design",
-        progress_percentage: 0,
-        budget_used: 0,
-      };
-
-      // Step 4: Upload plan image if exists
-      if (project.planImageFile) {
-        try {
-          const fileExt = project.planImageFile.name.split(".").pop();
-          const fileName = `${user.id}/${Date.now()}.${fileExt}`;
-
-          const { error: uploadError } = await supabase.storage
-            .from("project-plans")
-            .upload(fileName, project.planImageFile);
-
-          if (!uploadError) {
-            const {
-              data: { publicUrl },
-            } = supabase.storage.from("project-plans").getPublicUrl(fileName);
-
-            projectData.plan_image_url = publicUrl;
-          }
-        } catch (uploadErr) {
-          console.warn("⚠️ Image upload failed:", uploadErr);
-        }
-      }
-
-      // Step 5: Insert project into database
-      const { data: newProject, error: insertError } = await supabase
-        .from("projects")
-        .insert(projectData)
-        .select()
-        .single();
-
-      if (insertError) throw insertError;
-
-      console.log("✅ Project saved to database:", newProject);
-
-      // Step 6: Navigate with recommendations
-      const completeData = {
+      onComplete?.({
         ...project,
-        id: newProject.id,
         answers,
         aiPrediction: aiPrediction?.success
           ? aiPrediction.predicted_cost
           : null,
-        recommendations: recommendations,
-        showRecommendations:
-          recommendations?.success && recommendations?.suppliers?.length > 0,
-      };
-
-      onComplete?.(completeData);
+      });
     } catch (err) {
-      console.error("❌ Submission failed:", err);
-      setError(
-        err.message ||
-          "Could not save project. Please review your inputs and try again."
-      );
+      console.error("Submission failed:", err);
+      setError("Could not continue. Please review your inputs and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -579,11 +393,10 @@ function ProjectWizard({ onComplete }) {
 
   const TechChip = ({ value }) => {
     const active = project.techNeeds.includes(value);
-
     return (
       <motion.button
         type="button"
-        whileTap={{ scale: 0.97 }}
+        whileTap={{ scale: 0.95 }}
         onClick={() =>
           setProject((p) => ({
             ...p,
@@ -592,17 +405,13 @@ function ProjectWizard({ onComplete }) {
               : [...p.techNeeds, value],
           }))
         }
-        className={`flex items-center justify-between gap-2 rounded-lg border px-3 py-2 text-xs md:text-sm transition-all
-        ${
+        className={`rounded-xl border px-3 py-2 text-sm transition-colors ${
           active
-            ? "border-orange-300 bg-orange-50 text-orange-700 shadow-sm"
+            ? "border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50/30 text-orange-700"
             : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
         }`}
       >
-        <span className="truncate text-left">{value}</span>
-        {active && (
-          <CheckCircle2 className="h-4 w-4 shrink-0 text-orange-500" />
-        )}
+        {value}
       </motion.button>
     );
   };
@@ -773,7 +582,6 @@ function ProjectWizard({ onComplete }) {
                           className="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                         />
                       </div>
-
                       <div>
                         <label className="text-sm text-slate-600">
                           Number of floors
@@ -948,20 +756,17 @@ function ProjectWizard({ onComplete }) {
                           />
                         </div>
 
-                        {/* ML Model Prediction Summary */}
+                        {/* AI Prediction Summary */}
                         {aiPrediction?.success && (
                           <div className="col-span-2 mt-4 pt-4 border-t border-orange-100">
                             <div className="flex items-center gap-2 mb-2">
-                              <Brain className="h-4 w-4 text-amber-600" />
+                              <Sparkles className="h-4 w-4 text-amber-600" />
                               <span className="text-sm font-semibold text-amber-700">
-                                ML Model Predicted Cost
+                                AI-Predicted Cost
                               </span>
                             </div>
                             <div className="text-2xl font-extrabold text-amber-600">
                               {currency(aiPrediction.predicted_cost)}
-                            </div>
-                            <div className="text-xs text-slate-600 mt-1">
-                              Range: {currency(aiPrediction.confidence_interval.lower)} - {currency(aiPrediction.confidence_interval.upper)}
                             </div>
                           </div>
                         )}
@@ -1017,7 +822,7 @@ function ProjectWizard({ onComplete }) {
                     {isSubmitting ? (
                       <>
                         <Loader2 className="h-5 w-5 animate-spin" />
-                        Getting Recommendations...
+                        Loading...
                       </>
                     ) : (
                       "Get Recommendations"

@@ -237,86 +237,6 @@ export default function Login() {
                   "Log in"
                 )}
               </motion.button>
-
-              {/* Divider */}
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-200"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="bg-white px-4 text-slate-500">
-                    Or try demo accounts
-                  </span>
-                </div>
-              </div>
-
-              {/* Demo Accounts */}
-              <div className="grid grid-cols-2 gap-3">
-                <motion.button
-                  whileHover={{
-                    scale: 1.02,
-                    boxShadow: "0 4px 12px rgba(249, 115, 22, 0.15)",
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleDemoFill("owner")}
-                  className="flex flex-col items-center gap-2 rounded-xl border-2 border-slate-200 bg-gradient-to-br from-slate-50 to-white p-4 transition-all hover:border-orange-300"
-                >
-                  <Building2 className="h-6 w-6 text-orange-600" />
-                  <div className="text-center">
-                    <div className="text-sm font-semibold text-slate-700">
-                      Demo Owner
-                    </div>
-                    <div className="text-xs text-slate-500">Quick login</div>
-                  </div>
-                </motion.button>
-
-                <motion.button
-                  whileHover={{
-                    scale: 1.02,
-                    boxShadow: "0 4px 12px rgba(249, 115, 22, 0.15)",
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleDemoFill("provider")}
-                  className="flex flex-col items-center gap-2 rounded-xl border-2 border-slate-200 bg-gradient-to-br from-slate-50 to-white p-4 transition-all hover:border-orange-300"
-                >
-                  <Briefcase className="h-6 w-6 text-orange-600" />
-                  <div className="text-center">
-                    <div className="text-sm font-semibold text-slate-700">
-                      Demo Provider
-                    </div>
-                    <div className="text-xs text-slate-500">Quick login</div>
-                  </div>
-                </motion.button>
-              </div>
-
-              {/* Features Banner */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="rounded-xl bg-gradient-to-r from-orange-50 to-amber-50 p-4"
-              >
-                <div className="mb-2 flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-orange-600" />
-                  <span className="text-sm font-semibold text-orange-800">
-                    New Features
-                  </span>
-                </div>
-                <ul className="space-y-1 text-xs text-slate-700">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="h-3 w-3 text-green-600" />
-                    AI-powered cost estimation
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="h-3 w-3 text-green-600" />
-                    Real-time provider matching
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="h-3 w-3 text-green-600" />
-                    Modern construction technologies
-                  </li>
-                </ul>
-              </motion.div>
             </div>
           </div>
         </motion.div>
@@ -335,16 +255,6 @@ export default function Login() {
           >
             Create one
           </a>
-        </motion.div>
-
-        {/* Security Notice */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="mt-4 text-center text-xs text-slate-500"
-        >
-          🔒 Secure connection • Your data is encrypted
         </motion.div>
       </motion.div>
     </main>
