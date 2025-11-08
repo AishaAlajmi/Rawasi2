@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import rawasiLogo from "./assets/photo_2025-08-13_21-03-51.png";
 
 import Header from "./components/Header.jsx";
@@ -38,13 +44,15 @@ export default function App() {
   const location = useLocation();
 
   // show progress only on flow routes (not on Landing or Dashboard)
-  const showFlowProgress = ["/project", "/recs", "/messages"].some(
-    (p) => location.pathname.startsWith(p)
+  const showFlowProgress = ["/project", "/recs", "/messages"].some((p) =>
+    location.pathname.startsWith(p)
   );
 
   // ---- Auth handlers -------------------------------------------------------
   function handleRegister(payload) {
-    if (users.some((u) => u.email.toLowerCase() === payload.email.toLowerCase())) {
+    if (
+      users.some((u) => u.email.toLowerCase() === payload.email.toLowerCase())
+    ) {
       return { ok: false, error: "Email already registered" };
     }
     const newUser = { id: uid(), ...payload, createdAt: Date.now() };
@@ -60,10 +68,17 @@ export default function App() {
   }
   function handleLogin({ email, password }) {
     const user = users.find(
-      (u) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+      (u) =>
+        u.email.toLowerCase() === email.toLowerCase() && u.password === password
     );
     if (!user) return { ok: false, error: "Invalid credentials" };
-    setAuth({ id: user.id, name: user.name, role: user.role, email: user.email, phone: user.phone });
+    setAuth({
+      id: user.id,
+      name: user.name,
+      role: user.role,
+      email: user.email,
+      phone: user.phone,
+    });
     navigate("/project");
     return { ok: true };
   }
@@ -85,8 +100,19 @@ export default function App() {
           <Route path="/" element={<Landing />} />
 
           {/* Auth */}
-          <Route path="/login" element={<Login onSubmit={handleLogin} onForgot={() => setForgotModal({ open: true })} />} />
-          <Route path="/register" element={<Register onSubmit={handleRegister} />} />
+          <Route
+            path="/login"
+            element={
+              <Login
+                onSubmit={handleLogin}
+                onForgot={() => setForgotModal({ open: true })}
+              />
+            }
+          />
+          <Route
+            path="/register"
+            element={<Register onSubmit={handleRegister} />}
+          />
 
           {/* Flow */}
           <Route
@@ -105,20 +131,25 @@ export default function App() {
             path="/recs"
             element={
               <RequireProject project={project}>
-                <Recommendations
-                  project={project}
-                    />
+                <Recommendations project={project} />
               </RequireProject>
             }
           />
-         
-        <Route path="/messages" element={<Messages onProceed={() => navigate("/dashboard")} />} />
 
+          <Route
+            path="/messages"
+            element={<Messages onProceed={() => navigate("/dashboard")} />}
+          />
 
           {/* Dashboard (outside the progress bar) */}
           <Route
             path="/dashboard"
-            element={<Dashboard project={project} onStartProject={() => navigate("/project")} />}
+            element={
+              <Dashboard
+                project={project}
+                onStartProject={() => navigate("/project")}
+              />
+            }
           />
 
           {/* Fallback */}
@@ -132,7 +163,10 @@ export default function App() {
         onClose={() => setOtpModal({ open: false, email: "" })}
         onVerify={verifyOtp}
       />
-      <ForgotModal open={forgotModal.open} onClose={() => setForgotModal({ open: false })} />
+      <ForgotModal
+        open={forgotModal.open}
+        onClose={() => setForgotModal({ open: false })}
+      />
 
       <Footer logoUrl={rawasiLogo} />
     </div>

@@ -1,4 +1,4 @@
-// src/pages/Project.jsx - COMPLETE VERSION WITH ML MODEL INTEGRATION
+// src/pages/Project.jsx - COMPLETE VERSION WITH COST & TIMELINE ML MODEL INTEGRATION
 import React, { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -21,6 +21,7 @@ import { supabase } from "../lib/supabase";
 import { Section } from "../components/ui.jsx";
 import { estimateCostAndTime } from "../lib/recommend.js";
 import { predictProjectCost } from "../lib/aiModelService.js";
+import { predictTimeline } from "../lib/timelineService.js";
 import { clamp, currency } from "../lib/utils.js";
 
 /* ------------------------------- HELPER COMPONENTS ------------------------------- */
@@ -150,7 +151,13 @@ function QuickPreferencesSidebar({ answers, setAnswers }) {
   );
 }
 
-function LiveEstimator({ est, aiPrediction, isLoadingAI }) {
+function LiveEstimator({
+  est,
+  aiPrediction,
+  timelinePrediction,
+  isLoadingAI,
+  isLoadingTimeline,
+}) {
   const { estCost, estTimeMonths } = est;
 
   return (
@@ -162,106 +169,223 @@ function LiveEstimator({ est, aiPrediction, isLoadingAI }) {
       transition={{ type: "spring", stiffness: 100, damping: 20 }}
       className="sticky top-6 rounded-2xl border border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50/30 p-6 shadow-xl"
     >
-      <div className="flex items-center gap-2 text-orange-800 text-lg font-semibold">
+      <div className="flex items-center gap-2 text-orange-800 text-lg font-semibold mb-4">
         <Calculator className="h-5 w-5" /> Live Project Estimate
       </div>
 
-      {/* AI Prediction Section */}
-      {isLoadingAI ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="mt-4 rounded-xl bg-white p-4 shadow-md border border-orange-100"
-        >
-          <div className="flex items-center justify-center gap-2 text-orange-600">
-            <Loader2 className="h-5 w-5 animate-spin" />
-            <span className="text-sm font-medium">AI is analyzing...</span>
-          </div>
-        </motion.div>
-      ) : aiPrediction?.success ? (
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="mt-4 space-y-3"
-        >
-          <div className="rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 p-4 border-2 border-amber-200">
-            <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="h-4 w-4 text-amber-600" />
-              <span className="text-xs font-semibold text-amber-700 uppercase">
-                AI Prediction
-              </span>
-            </div>
-            <div className="text-2xl font-extrabold text-amber-600">
-              {currency(aiPrediction.predicted_cost)}
-            </div>
-            <div className="text-xs text-slate-600 mt-1">
-              Range: {currency(aiPrediction.confidence_interval.lower)} -{" "}
-              {currency(aiPrediction.confidence_interval.upper)}
-            </div>
-            <div className="text-xs text-slate-500 mt-2">
-              Cost per sqm: {currency(aiPrediction.cost_per_sqm)}/m²
-            </div>
-          </div>
-        </motion.div>
-      ) : (
-        <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
+      {/* AI Predictions Grid */}
+      <div className="space-y-4">
+        {/* Cost Prediction Card */}
+        {isLoadingAI ? (
           <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.1, type: "spring", stiffness: 150 }}
-            className="rounded-xl bg-white p-4 text-center shadow-md border border-orange-100"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="rounded-xl bg-white p-4 shadow-md border border-orange-100"
           >
-            <div className="text-slate-600 font-medium">Estimated Cost</div>
-            <div className="mt-1 text-xl font-extrabold text-orange-600 text-nowrap">
+            <div className="flex items-center justify-center gap-2 text-orange-600">
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <span className="text-sm font-medium">Analyzing cost...</span>
+            </div>
+          </motion.div>
+        ) : aiPrediction?.success ? (
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 200 }}
+            className="relative rounded-2xl bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100/50 p-5 border-2 border-amber-200/60 shadow-lg overflow-hidden"
+          >
+            {/* Decorative background pattern */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-200/20 to-transparent rounded-full blur-2xl"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-orange-200/20 to-transparent rounded-full blur-xl"></div>
+
+            <div className="relative">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="p-1.5 bg-amber-100 rounded-lg">
+                  <Sparkles className="h-4 w-4 text-amber-600" />
+                </div>
+                <span className="text-xs font-bold text-amber-800 uppercase tracking-wide">
+                  AI Cost Prediction
+                </span>
+              </div>
+
+              <div className="text-3xl font-extrabold text-amber-600 mb-2">
+                {currency(aiPrediction.predicted_cost)}
+              </div>
+
+              <div className="space-y-1.5 text-xs">
+                <div className="flex items-center gap-2 text-amber-700/80">
+                  <div className="w-1 h-1 rounded-full bg-amber-500"></div>
+                  <span>
+                    Range: {currency(aiPrediction.confidence_interval.lower)} -{" "}
+                    {currency(aiPrediction.confidence_interval.upper)}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-amber-700/80">
+                  <div className="w-1 h-1 rounded-full bg-amber-500"></div>
+                  <span>
+                    Cost per sqm: {currency(aiPrediction.cost_per_sqm)}/m²
+                  </span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ scale: 0.95 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 150 }}
+            className="rounded-xl bg-white p-4 text-center shadow-md border border-orange-200"
+          >
+            <div className="text-sm text-slate-600 font-medium mb-1">
+              Estimated Cost
+            </div>
+            <div className="text-2xl font-extrabold text-orange-600">
               {currency(estCost)}
             </div>
           </motion.div>
+        )}
 
+        {/* Timeline Prediction Card */}
+        {isLoadingAI ? (
           <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 150 }}
-            className="rounded-xl bg-white p-4 text-center shadow-md border border-orange-100"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="rounded-xl bg-white p-4 shadow-md border border-orange-100"
           >
-            <div className="text-slate-600 font-medium">Estimated Time</div>
-            <div className="mt-1 text-xl font-extrabold text-orange-600 text-nowrap">
+            <div className="flex items-center justify-center gap-2 text-orange-600">
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <span className="text-sm font-medium">Analyzing cost...</span>
+            </div>
+          </motion.div>
+        ) : timelinePrediction?.success ? (
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 200 }}
+            className="relative rounded-2xl bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100/50 p-5 border-2 border-amber-200/60 shadow-lg overflow-hidden"
+          >
+            {/* Decorative background pattern */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-200/20 to-transparent rounded-full blur-2xl"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-orange-200/20 to-transparent rounded-full blur-xl"></div>
+
+            <div className="relative">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="p-1.5 bg-orange-100 rounded-lg">
+                  <Brain className="h-4 w-4 text-orange-600" />
+                </div>
+                <span className="text-xs font-bold text-orange-800 uppercase tracking-wide">
+                  AI Timeline Prediction
+                </span>
+              </div>
+
+              <div className="flex items-baseline gap-2 mb-2">
+                <div className="text-3xl font-extrabold text-amber-600 mb-2">
+                  {timelinePrediction.predicted_months}
+                </div>
+                <div className="text-3xl font-extrabold text-amber-600 mb-2">
+                  months
+                </div>
+              </div>
+
+              <div className="space-y-1.5 text-xs">
+                <div className="flex items-center gap-2 text-orange-700/80">
+                  <div className="w-1 h-1 rounded-full bg-orange-500"></div>
+                  <span>
+                    Based on {timelinePrediction.techniques_used?.length || 0}{" "}
+                    construction techniques
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-orange-700/80">
+                  <div className="w-1 h-1 rounded-full bg-orange-500"></div>
+                  <span>
+                    Method:{" "}
+                    {timelinePrediction.method === "ai"
+                      ? "🤖 AI-Powered"
+                      : "📊 Rule-Based"}
+                  </span>
+                </div>
+                {timelinePrediction.area_sqm && (
+                  <div className="flex items-center gap-2 text-orange-700/80">
+                    <div className="w-1 h-1 rounded-full bg-orange-500"></div>
+                    <span>
+                      For {timelinePrediction.area_sqm.toLocaleString()} sqm
+                      project
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Speed indicator badge */}
+              {timelinePrediction.predicted_months < 10 && (
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.3, type: "spring" }}
+                  className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-100 border border-green-200 rounded-full"
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                  <span className="text-xs font-semibold text-green-700">
+                    Fast Construction
+                  </span>
+                </motion.div>
+              )}
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ scale: 0.95 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 150, delay: 0.1 }}
+            className="rounded-xl bg-white p-4 text-center shadow-md border border-orange-200"
+          >
+            <div className="text-sm text-slate-600 font-medium mb-1">
+              Estimated Time
+            </div>
+            <div className="text-2xl font-extrabold text-orange-600">
               {estTimeMonths} mo
             </div>
           </motion.div>
-        </div>
-      )}
+        )}
+      </div>
 
-      <div className="mt-6 border-t pt-4 border-orange-100">
+      {/* Promise Section */}
+      <div className="mt-6 border-t pt-5 border-orange-100">
         <div className="text-sm font-semibold text-slate-700 mb-3">
           Our Promise
         </div>
         <ul className="space-y-3 text-sm text-slate-700">
           <motion.li
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
             className="flex items-center gap-3"
           >
-            <ShieldCheck className="h-5 w-5 text-green-600" /> Private & secure
-            data handling.
+            <div className="p-1 bg-green-100 rounded-lg">
+              <ShieldCheck className="h-4 w-4 text-green-600" />
+            </div>
+            <span>Private & secure data handling</span>
           </motion.li>
           <motion.li
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
             className="flex items-center gap-3"
           >
-            <Timer className="h-5 w-5 text-orange-600" /> Fast provider
-            responses through AI matching.
+            <div className="p-1 bg-orange-100 rounded-lg">
+              <Timer className="h-4 w-4 text-orange-600" />
+            </div>
+            <span>Fast provider responses through AI matching</span>
           </motion.li>
           <motion.li
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5 }}
             className="flex items-center gap-3"
           >
-            <Layers className="h-5 w-5 text-amber-500" /> Access to modern
-            construction tech.
+            <div className="p-1 bg-amber-100 rounded-lg">
+              <Layers className="h-4 w-4 text-amber-600" />
+            </div>
+            <span>Access to modern construction tech</span>
           </motion.li>
         </ul>
       </div>
@@ -288,6 +412,8 @@ function ProjectWizard({ onComplete }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [aiPrediction, setAiPrediction] = useState(null);
   const [isLoadingAI, setIsLoadingAI] = useState(false);
+  const [timelinePrediction, setTimelinePrediction] = useState(null);
+  const [isLoadingTimeline, setIsLoadingTimeline] = useState(false);
 
   const [project, setProject] = useState({
     name: "",
@@ -321,11 +447,12 @@ function ProjectWizard({ onComplete }) {
     [project]
   );
 
-  // Fetch AI prediction when project changes (with debounce)
+  // Fetch AI cost prediction when project changes (with debounce)
   useEffect(() => {
     const timer = setTimeout(() => {
       if (project.name && project.sizeSqm > 0 && project.timelineMonths > 0) {
         fetchAIPrediction();
+        fetchTimelinePrediction();
       }
     }, 500); // Debounce 500ms
 
@@ -336,6 +463,7 @@ function ProjectWizard({ onComplete }) {
     project.location,
     project.timelineMonths,
     project.techNeeds,
+    project.Nfloors,
   ]);
 
   const fetchAIPrediction = async () => {
@@ -348,6 +476,20 @@ function ProjectWizard({ onComplete }) {
       setAiPrediction({ success: false, error: error.message });
     } finally {
       setIsLoadingAI(false);
+    }
+  };
+
+  const fetchTimelinePrediction = async () => {
+    setIsLoadingTimeline(true);
+    try {
+      const prediction = await predictTimeline(project);
+      setTimelinePrediction(prediction);
+      console.log("✅ Timeline prediction:", prediction);
+    } catch (error) {
+      console.error("Failed to get timeline prediction:", error);
+      setTimelinePrediction({ success: false, error: error.message });
+    } finally {
+      setIsLoadingTimeline(false);
     }
   };
 
@@ -381,6 +523,9 @@ function ProjectWizard({ onComplete }) {
         answers,
         aiPrediction: aiPrediction?.success
           ? aiPrediction.predicted_cost
+          : null,
+        timelinePrediction: timelinePrediction?.success
+          ? timelinePrediction.predicted_months
           : null,
       });
     } catch (err) {
@@ -756,18 +901,37 @@ function ProjectWizard({ onComplete }) {
                           />
                         </div>
 
-                        {/* AI Prediction Summary */}
-                        {aiPrediction?.success && (
-                          <div className="col-span-2 mt-4 pt-4 border-t border-orange-100">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Sparkles className="h-4 w-4 text-amber-600" />
-                              <span className="text-sm font-semibold text-amber-700">
-                                AI-Predicted Cost
-                              </span>
-                            </div>
-                            <div className="text-2xl font-extrabold text-amber-600">
-                              {currency(aiPrediction.predicted_cost)}
-                            </div>
+                        {/* AI Predictions Summary */}
+                        {(aiPrediction?.success ||
+                          timelinePrediction?.success) && (
+                          <div className="col-span-2 mt-4 pt-4 border-t border-orange-100 space-y-3">
+                            {aiPrediction?.success && (
+                              <div>
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Sparkles className="h-4 w-4 text-amber-600" />
+                                  <span className="text-sm font-semibold text-amber-700">
+                                    AI-Predicted Cost
+                                  </span>
+                                </div>
+                                <div className="text-2xl font-extrabold text-amber-600">
+                                  {currency(aiPrediction.predicted_cost)}
+                                </div>
+                              </div>
+                            )}
+
+                            {timelinePrediction?.success && (
+                              <div>
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Brain className="h-4 w-4 text-amber-600" />
+                                  <span className="text-sm font-semibold text-amber-700">
+                                    AI-Predicted Timeline
+                                  </span>
+                                </div>
+                                <div className="text-2xl font-extrabold text-amber-600">
+                                  {timelinePrediction.predicted_months} months
+                                </div>
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>
@@ -845,7 +1009,9 @@ function ProjectWizard({ onComplete }) {
                 <LiveEstimator
                   est={{ estCost, estTimeMonths }}
                   aiPrediction={aiPrediction}
+                  timelinePrediction={timelinePrediction}
                   isLoadingAI={isLoadingAI}
+                  isLoadingTimeline={isLoadingTimeline}
                 />
               )}
             </AnimatePresence>

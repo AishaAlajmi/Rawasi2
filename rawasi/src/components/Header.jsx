@@ -9,34 +9,35 @@ export default function Header() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { lang, setLang } = useLang();
-  
+
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const L = lang === "ar"
-    ? { 
-        home: "الرئيسية", 
-        why: "لماذا رواسي", 
-        how: "كيف تعمل", 
-        dash: "لوحة التحكم", 
-        login: "تسجيل الدخول", 
-        register: "إنشاء حساب",
-        profile: "الملف الشخصي",
-        settings: "الإعدادات",
-        logout: "تسجيل الخروج"
-      }
-    : { 
-        home: "Home",       
-        why: "Why Rawasi",    
-        how: "How it works", 
-        dash: "Dashboard",        
-        login: "Login",         
-        register: "Create account",
-        profile: "Profile",
-        settings: "Settings",
-        logout: "Logout"
-      };
+  const L =
+    lang === "ar"
+      ? {
+          home: "الرئيسية",
+          why: "لماذا رواسي",
+          how: "كيف تعمل",
+          dash: "لوحة التحكم",
+          login: "تسجيل الدخول",
+          register: "إنشاء حساب",
+          profile: "الملف الشخصي",
+          settings: "الإعدادات",
+          logout: "تسجيل الخروج",
+        }
+      : {
+          home: "Home",
+          why: "Why Rawasi",
+          how: "How it works",
+          dash: "Dashboard",
+          login: "Login",
+          register: "Create account",
+          profile: "Profile",
+          settings: "Settings",
+          logout: "Logout",
+        };
 
   // Check authentication state on mount and when it changes
   useEffect(() => {
@@ -61,7 +62,9 @@ export default function Header() {
   }, []);
 
   const checkUser = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (user) {
       setUser(user);
       fetchProfile(user.id);
@@ -70,11 +73,11 @@ export default function Header() {
 
   const fetchProfile = async (userId) => {
     const { data } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
       .single();
-    
+
     if (data) {
       setProfile(data);
     }
@@ -92,43 +95,51 @@ export default function Header() {
     <header className="sticky top-0 z-40 border-b border-orange-200 bg-white/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <button 
-          onClick={() => navigate("/")} 
+        <button
+          onClick={() => navigate("/")}
           className="flex items-center hover:opacity-80 transition-opacity"
         >
           <img src={rawasiLogo} alt="Rawasi" className="h-15 w-20 rounded" />
           <div className="leading-tight text-left">
-            <div className="text-base font-semibold tracking-wide text-slate-900">RAWASI</div>
-            <div className="text-xs text-orange-600 font-medium">Match. Estimate. Build</div>
+            <div className="text-base font-semibold tracking-wide text-slate-900">
+              RAWASI
+            </div>
+            <div className="text-xs text-orange-600 font-medium">
+              Match. Estimate. Build
+            </div>
           </div>
         </button>
 
         {/* Navigation */}
         <nav className="hidden md:flex items-center gap-6 text-sm">
-          <Link 
+          <Link
             className={`hover:text-orange-600 transition-colors ${
-              pathname === "/" ? "text-orange-600 font-medium" : "text-slate-700"
-            }`} 
+              pathname === "/"
+                ? "text-orange-600 font-medium"
+                : "text-slate-700"
+            }`}
             to="/"
           >
             {L.home}
           </Link>
-          <a 
-            className="hover:text-orange-600 text-slate-700 transition-colors" 
+          <a
+            className="hover:text-orange-600 text-slate-700 transition-colors"
             href="#about-why"
           >
             {L.why}
           </a>
-          <a 
-            className="hover:text-orange-600 text-slate-700 transition-colors" 
+          <a
+            className="hover:text-orange-600 text-slate-700 transition-colors"
             href="#about-how"
           >
             {L.how}
           </a>
-          <Link 
+          <Link
             className={`hover:text-orange-600 transition-colors ${
-              pathname.startsWith("/dashboard") ? "text-orange-600 font-medium" : "text-slate-700"
-            }`} 
+              pathname.startsWith("/dashboard")
+                ? "text-orange-600 font-medium"
+                : "text-slate-700"
+            }`}
             to="/dashboard"
           >
             {L.dash}
@@ -139,18 +150,22 @@ export default function Header() {
         <div className="flex items-center gap-3">
           {/* Language Toggle */}
           <div className="inline-flex rounded-xl border border-orange-200 bg-white p-1">
-            <button 
+            <button
               className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
-                lang === "en" ? "bg-orange-100 text-orange-700 font-medium" : "text-slate-700 hover:text-slate-900"
-              }`} 
+                lang === "en"
+                  ? "bg-orange-100 text-orange-700 font-medium"
+                  : "text-slate-700 hover:text-slate-900"
+              }`}
               onClick={() => setLang("en")}
             >
               EN
             </button>
-            <button 
+            <button
               className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
-                lang === "ar" ? "bg-orange-100 text-orange-700 font-medium" : "text-slate-700 hover:text-slate-900"
-              }`} 
+                lang === "ar"
+                  ? "bg-orange-100 text-orange-700 font-medium"
+                  : "text-slate-700 hover:text-slate-900"
+              }`}
               onClick={() => setLang("ar")}
             >
               العربية
@@ -170,10 +185,10 @@ export default function Header() {
                 </div>
                 <div className="text-left">
                   <div className="text-sm font-medium text-slate-900">
-                    {profile?.name || user.email?.split('@')[0]}
+                    {profile?.name || user.email?.split("@")[0]}
                   </div>
                   <div className="text-xs text-slate-500 capitalize">
-                    {profile?.role || 'User'}
+                    {profile?.role || "User"}
                   </div>
                 </div>
               </button>
@@ -183,27 +198,27 @@ export default function Header() {
                 <div className="absolute right-0 mt-2 w-56 rounded-xl border border-orange-200 bg-white shadow-lg">
                   <div className="p-3 border-b border-slate-100">
                     <div className="text-sm font-medium text-slate-900">
-                      {profile?.name || 'User'}
+                      {profile?.name || "User"}
                     </div>
                     <div className="text-xs text-slate-500">{user.email}</div>
                   </div>
-                  
+
                   <div className="p-2">
                     <button
                       onClick={() => {
                         setShowDropdown(false);
-                        navigate('/profile');
+                        navigate("/profile");
                       }}
                       className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-orange-50 hover:text-orange-700 transition-colors"
                     >
                       <User className="h-4 w-4" />
                       {L.profile}
                     </button>
-                    
+
                     <button
                       onClick={() => {
                         setShowDropdown(false);
-                        navigate('/settings');
+                        navigate("/settings");
                       }}
                       className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-orange-50 hover:text-orange-700 transition-colors"
                     >
@@ -227,15 +242,15 @@ export default function Header() {
           ) : (
             // Not logged in - Show login/register buttons
             <>
-              <button 
-                onClick={() => navigate("/login")} 
+              <button
+                onClick={() => navigate("/login")}
                 className="inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-gradient-to-r from-orange-500 to-amber-600 text-white font-medium hover:from-orange-600 hover:to-amber-700 transition-all duration-150 shadow-sm hover:shadow-md"
               >
                 {L.login}
               </button>
 
-              <button 
-                onClick={() => navigate("/register")} 
+              <button
+                onClick={() => navigate("/register")}
                 className="inline-flex items-center gap-2 rounded-xl px-4 py-2 border border-orange-300 text-orange-700 font-medium hover:bg-orange-50 hover:border-orange-400 transition-all duration-150"
               >
                 {L.register}
@@ -247,8 +262,8 @@ export default function Header() {
 
       {/* Click outside to close dropdown */}
       {showDropdown && (
-        <div 
-          className="fixed inset-0 z-30" 
+        <div
+          className="fixed inset-0 z-30"
           onClick={() => setShowDropdown(false)}
         />
       )}

@@ -412,7 +412,7 @@ export default function Recommendations({
                   </p>
                 </div>
               </div>
-           </div>
+            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {topPicks.map((provider, index) => (

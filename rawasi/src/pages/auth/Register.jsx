@@ -76,34 +76,31 @@ export default function Register({ onSubmit }) {
       if (authError) throw authError;
 
       // 2. Create profile in profiles table
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          id: authData.user.id,
-          name: form.name,
-          phone: form.phone,
-          role: form.role,
-          created_at: new Date().toISOString(),
-        });
+      const { error: profileError } = await supabase.from("profiles").insert({
+        id: authData.user.id,
+        name: form.name,
+        phone: form.phone,
+        role: form.role,
+        created_at: new Date().toISOString(),
+      });
 
       if (profileError) throw profileError;
 
       // Success!
       setSuccess(true);
-      
+
       // Optional: Auto-login after registration
       setTimeout(() => {
-        onSubmit?.({ 
-          ok: true, 
+        onSubmit?.({
+          ok: true,
           user: authData.user,
           profile: {
             name: form.name,
             phone: form.phone,
-            role: form.role
-          }
+            role: form.role,
+          },
         });
       }, 2000);
-
     } catch (error) {
       setErr(error.message || "Registration failed. Please try again.");
     } finally {

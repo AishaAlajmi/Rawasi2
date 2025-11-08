@@ -49,30 +49,33 @@ export default function Dashboard({
     try {
       setLoading(true);
 
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
-      
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
       if (userError || !user) {
-        console.log('User not logged in');
+        console.log("User not logged in");
         setLoading(false);
         return;
       }
 
       const { data: projectsData, error: projectsError } = await supabase
-        .from('projects')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+        .from("projects")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
 
       if (projectsError) throw projectsError;
 
-      console.log('✅ Fetched projects:', projectsData);
-      
+      console.log("✅ Fetched projects:", projectsData);
+
       // Convert database projects to dashboard format
-      const converted = projectsData.map(proj => ({
+      const converted = projectsData.map((proj) => ({
         id: proj.id,
         name: proj.name,
-        status: proj.status || 'planning',
-        phase: proj.phase || 'Design',
+        status: proj.status || "planning",
+        phase: proj.phase || "Design",
         budget: proj.budget,
         timelineMonths: proj.timeline_months,
         sizeSqm: proj.size_sqm,
@@ -81,23 +84,24 @@ export default function Dashboard({
         nFloors: proj.n_floors,
         progressPct: proj.progress_percentage / 100,
         budgetUsed: proj.budget_used || 0,
-        provider: proj.provider_name ? {
-          name: proj.provider_name,
-          rating: 4.5,
-          responsivenessHrs: 8,
-          changeOrders: 2,
-          onTimeRate: 0.90,
-        } : null,
-        breakdown: { materials: 0.50, labor: 0.35, tech: 0.15 },
+        provider: proj.provider_name
+          ? {
+              name: proj.provider_name,
+              rating: 4.5,
+              responsivenessHrs: 8,
+              changeOrders: 2,
+              onTimeRate: 0.9,
+            }
+          : null,
+        breakdown: { materials: 0.5, labor: 0.35, tech: 0.15 },
         // Generate realistic tasks based on project phase
         tasks: generateTasksFromPhase(proj.phase, proj.timeline_months),
         createdAt: proj.created_at,
       }));
 
       setUserProjects(converted);
-
     } catch (error) {
-      console.error('Error fetching projects:', error);
+      console.error("Error fetching projects:", error);
     } finally {
       setLoading(false);
     }
@@ -107,17 +111,17 @@ export default function Dashboard({
   const generateTasksFromPhase = (phase, timelineMonths) => {
     const totalWeeks = timelineMonths * 4;
     const phaseMap = {
-      'Design': 0,
-      'Permits': 1,
-      'Groundwork': 2,
-      'Structure': 3,
-      'MEP': 4,
-      'Finishes': 5,
-      'Handover': 6
+      Design: 0,
+      Permits: 1,
+      Groundwork: 2,
+      Structure: 3,
+      MEP: 4,
+      Finishes: 5,
+      Handover: 6,
     };
 
     const currentPhaseIndex = phaseMap[phase] || 0;
-    
+
     const allTasks = [
       { name: isAr ? "التصميم" : "Design", duration: 4 },
       { name: isAr ? "التراخيص" : "Permits", duration: 6 },
@@ -132,18 +136,26 @@ export default function Dashboard({
     return allTasks.map((task, index) => {
       const baseStart = weekCounter;
       const baseDur = task.duration;
-      
+
       // If task is before current phase, it's completed
       // If task is current phase, it's in progress
       // If task is after current phase, it hasn't started
       const isCompleted = index < currentPhaseIndex;
       const isCurrent = index === currentPhaseIndex;
-      
-      const actStart = isCompleted ? baseStart : (isCurrent ? baseStart : baseStart + 1);
-      const actDur = isCompleted ? baseDur : (isCurrent ? Math.floor(baseDur * 0.6) : baseDur);
-      
+
+      const actStart = isCompleted
+        ? baseStart
+        : isCurrent
+        ? baseStart
+        : baseStart + 1;
+      const actDur = isCompleted
+        ? baseDur
+        : isCurrent
+        ? Math.floor(baseDur * 0.6)
+        : baseDur;
+
       weekCounter += baseDur;
-      
+
       return {
         name: task.name,
         baseStart,
@@ -151,7 +163,7 @@ export default function Dashboard({
         actStart,
         actDur,
         completed: isCompleted,
-        inProgress: isCurrent
+        inProgress: isCurrent,
       };
     });
   };
@@ -212,7 +224,8 @@ export default function Dashboard({
       }
     : {
         title: "Project Dashboard",
-        demoMsg: "You are viewing a demo dashboard. Start a project to personalize metrics.",
+        demoMsg:
+          "You are viewing a demo dashboard. Start a project to personalize metrics.",
         start: "Start a project",
         projectSwitcher: "Project",
         status: "Status",
@@ -255,7 +268,8 @@ export default function Dashboard({
         reply: "Reply",
         soleProvider: "Sole provider",
         assignProvider: "Assign provider",
-        mlNeedsProvider: "Timeline forecast available after provider assignment",
+        mlNeedsProvider:
+          "Timeline forecast available after provider assignment",
         of: "of",
         complete: "complete",
         currentPhase: "Current Phase",
@@ -264,7 +278,8 @@ export default function Dashboard({
         remaining: "Remaining",
       };
 
-  const list = userProjects.length > 0 ? userProjects : (projects?.length ? projects : []);
+  const list =
+    userProjects.length > 0 ? userProjects : projects?.length ? projects : [];
 
   const initial = project || list[0];
   const [selectedId, setSelectedId] = useState(initial?.id);
@@ -278,8 +293,13 @@ export default function Dashboard({
 
   const filtered = useMemo(() => {
     return list.filter((p) => {
-      if (phaseFilter !== "all" && (p.phase || "").toLowerCase() !== phaseFilter) return false;
-      if (query && !p.name.toLowerCase().includes(query.toLowerCase())) return false;
+      if (
+        phaseFilter !== "all" &&
+        (p.phase || "").toLowerCase() !== phaseFilter
+      )
+        return false;
+      if (query && !p.name.toLowerCase().includes(query.toLowerCase()))
+        return false;
       return true;
     });
   }, [list, phaseFilter, query]);
@@ -296,11 +316,12 @@ export default function Dashboard({
   const tasks = selected?.tasks || [];
 
   // Calculate progress based on completed tasks
-  const completedTasks = tasks.filter(t => t.completed).length;
-  const inProgressTasks = tasks.filter(t => t.inProgress).length;
-  const progressPct = tasks.length > 0 
-    ? (completedTasks + (inProgressTasks * 0.5)) / tasks.length 
-    : (selected?.progressPct || 0);
+  const completedTasks = tasks.filter((t) => t.completed).length;
+  const inProgressTasks = tasks.filter((t) => t.inProgress).length;
+  const progressPct =
+    tasks.length > 0
+      ? (completedTasks + inProgressTasks * 0.5) / tasks.length
+      : selected?.progressPct || 0;
 
   // Calculate current week based on progress
   const nowWeek = Math.round(totalWeeks * progressPct);
@@ -319,27 +340,40 @@ export default function Dashboard({
   const CPI = AC > 0 ? EV / AC : 1;
   const EAC = CPI > 0 ? budgetVal / CPI : budgetVal;
 
-  const scheduleVarianceDays = Math.round((progressPct - plannedPct) * totalWeeks * 7);
-  const riskOfOverrun = Math.max(0, 1 - CPI) * 0.6 + (plannedPct > progressPct ? 0.2 : 0);
+  const scheduleVarianceDays = Math.round(
+    (progressPct - plannedPct) * totalWeeks * 7
+  );
+  const riskOfOverrun =
+    Math.max(0, 1 - CPI) * 0.6 + (plannedPct > progressPct ? 0.2 : 0);
 
   // Calculate forecast finish week
-  const baselineEnd = tasks.length > 0 
-    ? Math.max(...tasks.map((t) => t.baseStart + t.baseDur))
-    : totalWeeks;
-  const actualEnd = tasks.length > 0 
-    ? Math.max(...tasks.map((t) => t.actStart + t.actDur))
-    : totalWeeks;
+  const baselineEnd =
+    tasks.length > 0
+      ? Math.max(...tasks.map((t) => t.baseStart + t.baseDur))
+      : totalWeeks;
+  const actualEnd =
+    tasks.length > 0
+      ? Math.max(...tasks.map((t) => t.actStart + t.actDur))
+      : totalWeeks;
   const forecastFinishWeek = Math.round(actualEnd * (1 + riskOfOverrun * 0.15));
 
   // S-curve calculations
   const weeks = [...Array(totalWeeks + 1)].map((_, i) => i);
   const curvePlanned = weeks.map((w) => sigmoid(w / totalWeeks));
-  const curveActual = weeks.map((w) => 
-    w <= nowWeek ? sigmoid(w / totalWeeks) * progressPct / curvePlanned[nowWeek] : 0
+  const curveActual = weeks.map((w) =>
+    w <= nowWeek
+      ? (sigmoid(w / totalWeeks) * progressPct) / curvePlanned[nowWeek]
+      : 0
   );
-  const curveForecast = weeks.map((w) => sigmoid(w / Math.max(1, forecastFinishWeek)));
+  const curveForecast = weeks.map((w) =>
+    sigmoid(w / Math.max(1, forecastFinishWeek))
+  );
 
-  const costBreakdown = selected?.breakdown || { materials: 0.5, labor: 0.35, tech: 0.15 };
+  const costBreakdown = selected?.breakdown || {
+    materials: 0.5,
+    labor: 0.35,
+    tech: 0.15,
+  };
   const { provider } = getProjectProvider(selected);
   const hasProvider = !!provider;
 
@@ -379,7 +413,9 @@ export default function Dashboard({
         {/* Switcher & filters */}
         <div className="mb-5 grid grid-cols-1 gap-3 md:grid-cols-4">
           <div className="rounded-2xl border border-orange-200 bg-orange-50/50 p-3">
-            <div className="mb-1 text-xs text-orange-700">{t.projectSwitcher}</div>
+            <div className="mb-1 text-xs text-orange-700">
+              {t.projectSwitcher}
+            </div>
             <div className="flex items-center gap-2">
               <Search className="h-4 w-4 text-orange-500" />
               <input
@@ -466,15 +502,24 @@ export default function Dashboard({
             <div className="rounded-2xl border border-orange-200 bg-white p-6 shadow-lg">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div>
-                  <div className="text-xs text-orange-700 mb-1">{t.currentPhase}</div>
-                  <div className="text-2xl font-bold text-orange-600">{selected.phase}</div>
+                  <div className="text-xs text-orange-700 mb-1">
+                    {t.currentPhase}
+                  </div>
+                  <div className="text-2xl font-bold text-orange-600">
+                    {selected.phase}
+                  </div>
                   <div className="text-xs text-slate-600 mt-1">
-                    {selected.type} • {selected.sizeSqm} sqm • {selected.location}
+                    {selected.type} • {selected.sizeSqm} sqm •{" "}
+                    {selected.location}
                   </div>
                 </div>
                 <div>
-                  <div className="text-xs text-orange-700 mb-1">{t.progress}</div>
-                  <div className="text-2xl font-bold text-green-600">{pct(progressPct)}</div>
+                  <div className="text-xs text-orange-700 mb-1">
+                    {t.progress}
+                  </div>
+                  <div className="text-2xl font-bold text-green-600">
+                    {pct(progressPct)}
+                  </div>
                   <div className="mt-2 h-2 w-full rounded-full bg-slate-200">
                     <div
                       className="h-full rounded-full bg-gradient-to-r from-green-500 to-emerald-600 transition-all"
@@ -483,15 +528,23 @@ export default function Dashboard({
                   </div>
                 </div>
                 <div>
-                  <div className="text-xs text-orange-700 mb-1">{t.totalBudget}</div>
-                  <div className="text-2xl font-bold text-slate-800">{currency(budgetVal)}</div>
+                  <div className="text-xs text-orange-700 mb-1">
+                    {t.totalBudget}
+                  </div>
+                  <div className="text-2xl font-bold text-slate-800">
+                    {currency(budgetVal)}
+                  </div>
                   <div className="text-xs text-slate-600 mt-1">
                     {t.spent}: {currency(budgetUsed)} ({pct(budgetUsedPct)})
                   </div>
                 </div>
                 <div>
-                  <div className="text-xs text-orange-700 mb-1">{t.timeline}</div>
-                  <div className="text-2xl font-bold text-blue-600">{timelineMonths} mo</div>
+                  <div className="text-xs text-orange-700 mb-1">
+                    {t.timeline}
+                  </div>
+                  <div className="text-2xl font-bold text-blue-600">
+                    {timelineMonths} mo
+                  </div>
                   <div className="text-xs text-slate-600 mt-1">
                     Week {nowWeek} of {totalWeeks}
                   </div>
@@ -504,7 +557,9 @@ export default function Dashboard({
               <KpiCard
                 icon={Activity}
                 label={t.kpiPhase}
-                value={`${prettyStatus(selected?.status, isAr)} — ${selected?.phase}`}
+                value={`${prettyStatus(selected?.status, isAr)} — ${
+                  selected?.phase
+                }`}
                 color={ragColorFrom({ ok: true })}
                 spark={[0.1, 0.2, 0.35, progressPct, progressPct]}
                 sub={isAr ? "تقدم ثابت" : "Steady progress"}
@@ -513,15 +568,22 @@ export default function Dashboard({
                 icon={Wallet}
                 label={t.kpiBudget}
                 value={`${currency(budgetUsed)} / ${currency(budgetVal)}`}
-                color={ragColorFrom({ good: budgetUsedPct <= progressPct + 0.05 })}
+                color={ragColorFrom({
+                  good: budgetUsedPct <= progressPct + 0.05,
+                })}
                 spark={curveActual.slice(0, 20)}
-                sub={`${t.budgetUsed}: ${pct(budgetUsedPct)} (CPI: ${CPI.toFixed(2)})`}
+                sub={`${t.budgetUsed}: ${pct(
+                  budgetUsedPct
+                )} (CPI: ${CPI.toFixed(2)})`}
               />
               <KpiCard
                 icon={TrendingUp}
                 label={t.kpiEAC}
                 value={currency(EAC)}
-                color={ragColorFrom({ good: CPI >= 1, warn: CPI < 1 && CPI >= 0.9 })}
+                color={ragColorFrom({
+                  good: CPI >= 1,
+                  warn: CPI < 1 && CPI >= 0.9,
+                })}
                 spark={curveForecast.slice(0, 20)}
                 sub={isAr ? "التكلفة المتوقعة" : "Forecast cost"}
               />
@@ -539,7 +601,9 @@ export default function Dashboard({
               <KpiCard
                 icon={CheckCircle2}
                 label={t.kpiPct}
-                value={`${pct(progressPct)} (${completedTasks}/${tasks.length})`}
+                value={`${pct(progressPct)} (${completedTasks}/${
+                  tasks.length
+                })`}
                 color={ragColorFrom({ good: true })}
                 spark={[...Array(12)].map((_, i) => (i / 11) * progressPct)}
                 sub={t.complete}
@@ -571,19 +635,23 @@ export default function Dashboard({
                         .slice(0, 3)
                         .map((m) => (
                           <li key={m.name} className="flex items-center gap-2">
-                            <CalendarDays className="h-4 w-4 text-orange-600" /> {m.name}
+                            <CalendarDays className="h-4 w-4 text-orange-600" />{" "}
+                            {m.name}
                           </li>
                         ))}
                     </ul>
                   </div>
                   <div className="rounded-xl bg-white p-3 shadow-sm border border-orange-200">
-                    <div className="mb-1 text-orange-700">{isAr ? "قيد التنفيذ" : "In Progress"}</div>
+                    <div className="mb-1 text-orange-700">
+                      {isAr ? "قيد التنفيذ" : "In Progress"}
+                    </div>
                     <ul className="space-y-1 text-slate-800">
                       {tasks
                         .filter((t) => t.inProgress)
                         .map((m) => (
                           <li key={m.name} className="flex items-center gap-2">
-                            <Activity className="h-4 w-4 text-green-600" /> {m.name}
+                            <Activity className="h-4 w-4 text-green-600" />{" "}
+                            {m.name}
                           </li>
                         ))}
                     </ul>
@@ -593,29 +661,48 @@ export default function Dashboard({
 
               {/* Cost S-curve & Donut */}
               <div className="rounded-2xl border border-orange-200 bg-orange-50/50 p-6 shadow-sm">
-                <div className="mb-2 text-sm font-medium text-orange-800">{t.costCurve}</div>
+                <div className="mb-2 text-sm font-medium text-orange-800">
+                  {t.costCurve}
+                </div>
                 <SCurveChart
                   weeks={weeks}
                   planned={curvePlanned}
                   actual={curveActual}
                   forecast={curveForecast}
                 />
-                <div className="mt-4 text-sm font-medium text-orange-800">{t.costBreakdown}</div>
+                <div className="mt-4 text-sm font-medium text-orange-800">
+                  {t.costBreakdown}
+                </div>
                 <div className="mt-2 flex items-center gap-4">
                   <Donut
                     size={120}
                     segments={[
-                      { key: "materials", label: isAr ? "المواد" : "Materials", value: costBreakdown.materials },
-                      { key: "labor", label: isAr ? "العمل" : "Labor", value: costBreakdown.labor },
-                      { key: "tech", label: isAr ? "التقنية" : "Tech", value: costBreakdown.tech },
+                      {
+                        key: "materials",
+                        label: isAr ? "المواد" : "Materials",
+                        value: costBreakdown.materials,
+                      },
+                      {
+                        key: "labor",
+                        label: isAr ? "العمل" : "Labor",
+                        value: costBreakdown.labor,
+                      },
+                      {
+                        key: "tech",
+                        label: isAr ? "التقنية" : "Tech",
+                        value: costBreakdown.tech,
+                      },
                     ]}
                   />
                   <div className="text-xs text-orange-800">
-                    <Legend label={isAr ? "المواد" : "Materials"} /> {pct(costBreakdown.materials)}
+                    <Legend label={isAr ? "المواد" : "Materials"} />{" "}
+                    {pct(costBreakdown.materials)}
                     <br />
-                    <Legend label={isAr ? "العمل" : "Labor"} /> {pct(costBreakdown.labor)}
+                    <Legend label={isAr ? "العمل" : "Labor"} />{" "}
+                    {pct(costBreakdown.labor)}
                     <br />
-                    <Legend label={isAr ? "التقنية" : "Tech"} /> {pct(costBreakdown.tech)}
+                    <Legend label={isAr ? "التقنية" : "Tech"} />{" "}
+                    {pct(costBreakdown.tech)}
                   </div>
                 </div>
               </div>
@@ -624,15 +711,22 @@ export default function Dashboard({
             {/* Row 3: Provider & ML Insights */}
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
               <div className="rounded-2xl border border-orange-200 bg-white p-6 shadow-sm">
-                <div className="mb-2 text-sm font-medium text-orange-800">{t.providerPerf}</div>
+                <div className="mb-2 text-sm font-medium text-orange-800">
+                  {t.providerPerf}
+                </div>
                 <div className="flex items-center gap-3">
                   <UserCircle className="h-10 w-10 text-orange-500" />
                   <div>
-                    <div className="font-medium text-slate-900">{provider?.name || "—"}</div>
+                    <div className="font-medium text-slate-900">
+                      {provider?.name || "—"}
+                    </div>
                     {provider && (
                       <div className="flex items-center gap-2 text-xs text-orange-700">
                         <Stars rating={provider?.rating || 0} />
-                        <span>• {isAr ? "الاستجابة" : "Resp."}: ~{provider?.responsivenessHrs}h</span>
+                        <span>
+                          • {isAr ? "الاستجابة" : "Resp."}: ~
+                          {provider?.responsivenessHrs}h
+                        </span>
                       </div>
                     )}
                   </div>
@@ -651,30 +745,57 @@ export default function Dashboard({
               </div>
 
               <div className="lg:col-span-2 rounded-2xl border border-orange-200 bg-white p-6 shadow-sm">
-                <div className="mb-2 text-sm font-medium text-orange-800">{t.mlInsights}</div>
+                <div className="mb-2 text-sm font-medium text-orange-800">
+                  {t.mlInsights}
+                </div>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                   <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-3">
                     <div className="text-xs text-orange-700">{t.remaining}</div>
-                    <div className="text-sm font-semibold text-slate-900">{currency(budgetRemaining)}</div>
-                    <Chip>{pct(budgetRemaining / budgetVal)} {isAr ? "متبقي" : "left"}</Chip>
+                    <div className="text-sm font-semibold text-slate-900">
+                      {currency(budgetRemaining)}
+                    </div>
+                    <Chip>
+                      {pct(budgetRemaining / budgetVal)}{" "}
+                      {isAr ? "متبقي" : "left"}
+                    </Chip>
                   </div>
                   <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-3">
-                    <div className="text-xs text-orange-700">{t.forecastFinish}</div>
+                    <div className="text-xs text-orange-700">
+                      {t.forecastFinish}
+                    </div>
                     {hasProvider ? (
                       <>
                         <div className="text-sm font-semibold text-slate-900">
-                          {isAr ? `الأسبوع ${forecastFinishWeek}` : `Week ${forecastFinishWeek}`}
+                          {isAr
+                            ? `الأسبوع ${forecastFinishWeek}`
+                            : `Week ${forecastFinishWeek}`}
                         </div>
-                        <Chip>{t.riskOverrun}: {pct(riskOfOverrun)}</Chip>
+                        <Chip>
+                          {t.riskOverrun}: {pct(riskOfOverrun)}
+                        </Chip>
                       </>
                     ) : (
-                      <div className="text-sm text-orange-600">{t.mlNeedsProvider}</div>
+                      <div className="text-sm text-orange-600">
+                        {t.mlNeedsProvider}
+                      </div>
                     )}
                   </div>
                   <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-3">
-                    <div className="text-xs text-orange-700">{isAr ? "الحالة العامة" : "Overall Health"}</div>
+                    <div className="text-xs text-orange-700">
+                      {isAr ? "الحالة العامة" : "Overall Health"}
+                    </div>
                     <div className="text-sm font-semibold text-green-600">
-                      {CPI >= 0.95 ? (isAr ? "ممتاز" : "Excellent") : CPI >= 0.85 ? (isAr ? "جيد" : "Good") : (isAr ? "يحتاج انتباه" : "Needs attention")}
+                      {CPI >= 0.95
+                        ? isAr
+                          ? "ممتاز"
+                          : "Excellent"
+                        : CPI >= 0.85
+                        ? isAr
+                          ? "جيد"
+                          : "Good"
+                        : isAr
+                        ? "يحتاج انتباه"
+                        : "Needs attention"}
                     </div>
                     <Chip>CPI: {CPI.toFixed(2)}</Chip>
                   </div>
@@ -685,7 +806,9 @@ export default function Dashboard({
             {/* Footer: Reports */}
             <div className="rounded-2xl border border-orange-200 bg-orange-50/50 p-6 shadow-sm">
               <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                <div className="text-sm font-medium text-orange-800">{t.reports}</div>
+                <div className="text-sm font-medium text-orange-800">
+                  {t.reports}
+                </div>
                 <div className="flex items-center gap-2">
                   <input
                     type="date"
@@ -711,7 +834,14 @@ export default function Dashboard({
 
 // ---------- Components ----------
 
-function KpiCard({ icon: Icon, label, value, sub, color = "green", spark = [] }) {
+function KpiCard({
+  icon: Icon,
+  label,
+  value,
+  sub,
+  color = "green",
+  spark = [],
+}) {
   return (
     <div className="rounded-2xl border border-orange-200 bg-white p-4 shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-center gap-2 text-orange-700">
@@ -731,9 +861,13 @@ function Sparkline({ data, width = 80, height = 24, color = "green" }) {
   const max = Math.max(...data);
   const min = Math.min(...data);
   const scaleX = (i) => (i / (data.length - 1)) * width;
-  const scaleY = (v) => height - ((v - min) / Math.max(1e-6, max - min)) * height;
-  const path = data.map((v, i) => `${i === 0 ? "M" : "L"}${scaleX(i)},${scaleY(v)}`).join(" ");
-  const stroke = color === "red" ? "#ef4444" : color === "amber" ? "#f59e0b" : "#10b981";
+  const scaleY = (v) =>
+    height - ((v - min) / Math.max(1e-6, max - min)) * height;
+  const path = data
+    .map((v, i) => `${i === 0 ? "M" : "L"}${scaleX(i)},${scaleY(v)}`)
+    .join(" ");
+  const stroke =
+    color === "red" ? "#ef4444" : color === "amber" ? "#f59e0b" : "#10b981";
   return (
     <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
       <path d={path} fill="none" stroke={stroke} strokeWidth="2" />
@@ -784,7 +918,8 @@ function Chip({ children }) {
 function Legend({ label }) {
   return (
     <span className="mr-2 inline-flex items-center gap-1">
-      <span className="inline-block h-2 w-2 rounded-full bg-orange-500" /> {label}
+      <span className="inline-block h-2 w-2 rounded-full bg-orange-500" />{" "}
+      {label}
     </span>
   );
 }
@@ -825,29 +960,64 @@ function Donut({ segments = [], size = 120, stroke = 16 }) {
   );
 }
 
-function SCurveChart({ weeks, planned, actual, forecast, width = 500, height = 180 }) {
+function SCurveChart({
+  weeks,
+  planned,
+  actual,
+  forecast,
+  width = 500,
+  height = 180,
+}) {
   const pad = 24;
   const W = width;
   const H = height;
   const X = (i) => pad + (i / Math.max(1, weeks.length - 1)) * (W - pad * 2);
   const Y = (v) => H - pad - v * (H - pad * 2);
 
-  const toPath = (arr) => arr.map((v, i) => `${i === 0 ? "M" : "L"}${X(i)},${Y(v)}`).join(" ");
-  const area = (arr) => `${toPath(arr)} L ${X(arr.length - 1)},${Y(0)} L ${X(0)},${Y(0)} Z`;
+  const toPath = (arr) =>
+    arr.map((v, i) => `${i === 0 ? "M" : "L"}${X(i)},${Y(v)}`).join(" ");
+  const area = (arr) =>
+    `${toPath(arr)} L ${X(arr.length - 1)},${Y(0)} L ${X(0)},${Y(0)} Z`;
 
   return (
     <div className="rounded-xl bg-white p-3 shadow-sm border border-orange-200">
-      <svg width="100%" height={H} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
+      <svg
+        width="100%"
+        height={H}
+        viewBox={`0 0 ${W} ${H}`}
+        preserveAspectRatio="none"
+      >
         {[0, 0.25, 0.5, 0.75, 1].map((g, i) => (
-          <line key={i} x1={pad} x2={W - pad} y1={Y(g)} y2={Y(g)} stroke="#fed7aa" strokeWidth="1" />
+          <line
+            key={i}
+            x1={pad}
+            x2={W - pad}
+            y1={Y(g)}
+            y2={Y(g)}
+            stroke="#fed7aa"
+            strokeWidth="1"
+          />
         ))}
         <path d={area(planned)} fill="#ea580c33" stroke="none" />
         <path d={area(actual)} fill="#f59e0b22" stroke="none" />
         <path d={area(forecast)} fill="#d9770622" stroke="none" />
-        <path d={toPath(planned)} fill="none" stroke="#ea580c" strokeWidth="2" />
+        <path
+          d={toPath(planned)}
+          fill="none"
+          stroke="#ea580c"
+          strokeWidth="2"
+        />
         <path d={toPath(actual)} fill="none" stroke="#f59e0b" strokeWidth="2" />
-        <path d={toPath(forecast)} fill="none" stroke="#d97706" strokeWidth="2" />
-        <g transform={`translate(${pad}, ${pad - 8})`} className="text-[10px] fill-orange-700">
+        <path
+          d={toPath(forecast)}
+          fill="none"
+          stroke="#d97706"
+          strokeWidth="2"
+        />
+        <g
+          transform={`translate(${pad}, ${pad - 8})`}
+          className="text-[10px] fill-orange-700"
+        >
           <LegendSwatch color="#ea580c" label="Planned" />
           <LegendSwatch color="#f59e0b" label="Actual" x={80} />
           <LegendSwatch color="#d97706" label="Forecast" x={150} />
@@ -861,47 +1031,91 @@ function LegendSwatch({ color, label, x = 0 }) {
   return (
     <g transform={`translate(${x},0)`}>
       <rect width="10" height="10" fill={color} rx="2" />
-      <text x="14" y="9">{label}</text>
+      <text x="14" y="9">
+        {label}
+      </text>
     </g>
   );
 }
 
-function Gantt({ tasks, totalWeeks, nowWeek, forecastFinishWeek, mlEnabled = true, mlTip, rtl = false }) {
-  const weeks = Array.from({ length: Math.min(totalWeeks, 36) }, (_, i) => i + 1);
+function Gantt({
+  tasks,
+  totalWeeks,
+  nowWeek,
+  forecastFinishWeek,
+  mlEnabled = true,
+  mlTip,
+  rtl = false,
+}) {
+  const weeks = Array.from(
+    { length: Math.min(totalWeeks, 36) },
+    (_, i) => i + 1
+  );
   const dir = rtl ? "[direction:rtl]" : "";
   return (
     <div className="rounded-xl border border-orange-200 bg-white p-3">
-      <div className={`grid ${dir}`} style={{ gridTemplateColumns: `160px repeat(${weeks.length}, minmax(16px, 1fr))` }}>
-        <div className="px-2 text-xs text-orange-700">{rtl ? "المهمة" : "Task"}</div>
+      <div
+        className={`grid ${dir}`}
+        style={{
+          gridTemplateColumns: `160px repeat(${weeks.length}, minmax(16px, 1fr))`,
+        }}
+      >
+        <div className="px-2 text-xs text-orange-700">
+          {rtl ? "المهمة" : "Task"}
+        </div>
         {weeks.map((w) => (
-          <div key={w} className="text-center text-[10px] text-orange-500">{w}</div>
+          <div key={w} className="text-center text-[10px] text-orange-500">
+            {w}
+          </div>
         ))}
       </div>
       <div className="mt-2 space-y-2">
         {tasks.map((t) => (
-          <GanttRow key={t.name} task={t} totalWeeks={weeks.length} rtl={rtl} nowWeek={nowWeek} />
+          <GanttRow
+            key={t.name}
+            task={t}
+            totalWeeks={weeks.length}
+            rtl={rtl}
+            nowWeek={nowWeek}
+          />
         ))}
         {/* Current week marker */}
-        <div className="relative grid items-center" style={{ gridTemplateColumns: `160px 1fr` }}>
-          <div className="px-2 text-xs text-green-600">{rtl ? "الآن" : "Now"}</div>
+        <div
+          className="relative grid items-center"
+          style={{ gridTemplateColumns: `160px 1fr` }}
+        >
+          <div className="px-2 text-xs text-green-600">
+            {rtl ? "الآن" : "Now"}
+          </div>
           <div className="relative h-6 rounded bg-green-100">
             <div
               className="absolute top-0 h-6 border-2 border-dashed border-green-500"
-              style={{ [rtl ? "right" : "left"]: `${(nowWeek / weeks.length) * 100}%` }}
+              style={{
+                [rtl ? "right" : "left"]: `${(nowWeek / weeks.length) * 100}%`,
+              }}
             />
           </div>
         </div>
         {/* ML forecast finish marker */}
-        <div className="relative grid items-center" style={{ gridTemplateColumns: `160px 1fr` }}>
+        <div
+          className="relative grid items-center"
+          style={{ gridTemplateColumns: `160px 1fr` }}
+        >
           <div className="px-2 text-xs text-orange-600">ML</div>
           <div className="relative h-6 rounded bg-orange-100">
             {mlEnabled ? (
               <div
                 className="absolute top-0 h-6 border border-dashed border-amber-500"
-                style={{ [rtl ? "right" : "left"]: `${(forecastFinishWeek / weeks.length) * 100}%` }}
+                style={{
+                  [rtl ? "right" : "left"]: `${
+                    (forecastFinishWeek / weeks.length) * 100
+                  }%`,
+                }}
               />
             ) : (
-              <div className="absolute inset-0 grid place-items-center text-[10px] text-orange-600">{mlTip}</div>
+              <div className="absolute inset-0 grid place-items-center text-[10px] text-orange-600">
+                {mlTip}
+              </div>
             )}
           </div>
         </div>
@@ -918,18 +1132,25 @@ function GanttRow({ task, totalWeeks, rtl, nowWeek }) {
   const widthBase = `${(task.baseDur / totalWeeks) * 100}%`;
   const leftAct = `${(task.actStart / totalWeeks) * 100}%`;
   const widthAct = `${(task.actDur / totalWeeks) * 100}%`;
-  const baseStyle = rtl ? { right: leftBase, width: widthBase } : { left: leftBase, width: widthBase };
-  const actStyle = rtl ? { right: leftAct, width: widthAct } : { left: leftAct, width: widthAct };
-  
+  const baseStyle = rtl
+    ? { right: leftBase, width: widthBase }
+    : { left: leftBase, width: widthBase };
+  const actStyle = rtl
+    ? { right: leftAct, width: widthAct }
+    : { left: leftAct, width: widthAct };
+
   // Determine bar color based on task status
-  const barColor = task.completed 
-    ? "bg-green-500/90" 
-    : task.inProgress 
-      ? "bg-amber-500/90" 
-      : "bg-slate-300/90";
-  
+  const barColor = task.completed
+    ? "bg-green-500/90"
+    : task.inProgress
+    ? "bg-amber-500/90"
+    : "bg-slate-300/90";
+
   return (
-    <div className="relative grid items-center" style={{ gridTemplateColumns: `160px 1fr` }}>
+    <div
+      className="relative grid items-center"
+      style={{ gridTemplateColumns: `160px 1fr` }}
+    >
       <div className="truncate px-2 text-xs text-orange-800 flex items-center gap-1">
         {task.completed && <CheckCircle2 className="h-3 w-3 text-green-600" />}
         {task.inProgress && <Activity className="h-3 w-3 text-amber-600" />}
@@ -959,7 +1180,10 @@ function getProjectProvider(p) {
   if (Array.isArray(p?.providers)) {
     return { provider: p.providers[0] || null, issue: "legacy-multi" };
   }
-  return { provider: p?.provider || null, issue: p?.provider ? null : "missing" };
+  return {
+    provider: p?.provider || null,
+    issue: p?.provider ? null : "missing",
+  };
 }
 
 function clamp(v, min, max) {

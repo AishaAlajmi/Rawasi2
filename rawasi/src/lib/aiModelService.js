@@ -63,7 +63,7 @@ export async function predictProjectCost(project) {
 
   } catch (error) {
     console.error('❌ Model prediction error:', error);
-    
+
     // Return error with fallback
     return {
       success: false,
@@ -172,13 +172,13 @@ function calculateFallbackEstimate(project) {
 
   const baseRate = baseRates[project.type] || 4000;
   const sizeSqm = parseFloat(project.sizeSqm) || 1500;
-  
+
   // Add complexity factor based on timeline
   const timelineMonths = parseInt(project.timelineMonths) || 12;
   const urgencyMultiplier = timelineMonths < 10 ? 1.15 : 1.0;
-  
+
   const estimatedCost = baseRate * sizeSqm * urgencyMultiplier;
-  
+
   return Math.round(estimatedCost);
 }
 
@@ -222,7 +222,7 @@ export function getCostBreakdown(totalCost, projectType) {
   };
 
   const dist = distributions[projectType] || distributions['Residential'];
-  
+
   return {
     design: Math.round(totalCost * dist.design),
     foundation: Math.round(totalCost * dist.foundation),
@@ -241,11 +241,11 @@ export function getCostBreakdown(totalCost, projectType) {
  */
 export function calculateTimelineEstimate(project, predictedCost) {
   const sizeSqm = parseFloat(project.sizeSqm) || 1500;
-  
+
   // Base timeline calculation (months per 1000 sqm)
   const baseMonthsPer1000Sqm = 6;
   const estimatedMonths = Math.ceil((sizeSqm / 1000) * baseMonthsPer1000Sqm);
-  
+
   // Add buffer based on project complexity
   const complexityBuffer = {
     'Residential': 1.0,
@@ -253,10 +253,10 @@ export function calculateTimelineEstimate(project, predictedCost) {
     'Industrial': 1.15,
     'Mixed-Use': 1.25
   };
-  
+
   const multiplier = complexityBuffer[project.type] || 1.0;
   const adjustedMonths = Math.round(estimatedMonths * multiplier);
-  
+
   return {
     estimated_months: adjustedMonths,
     min_months: Math.max(adjustedMonths - 2, 6),
@@ -277,10 +277,10 @@ export function calculateTimelineEstimate(project, predictedCost) {
 export async function testModelConnection() {
   try {
     console.log('🔧 Testing ML Model API connection...');
-    
+
     // Test health endpoint
     const health = await checkModelHealth();
-    
+
     if (!health.success) {
       return {
         success: false,
@@ -298,12 +298,12 @@ export async function testModelConnection() {
     };
 
     const prediction = await predictProjectCost(testProject);
-    
+
     return {
       success: prediction.success,
       health_check: health,
       sample_prediction: prediction,
-      message: prediction.success 
+      message: prediction.success
         ? '✅ Model API is working correctly!'
         : '⚠️ Model API responded but prediction failed'
     };

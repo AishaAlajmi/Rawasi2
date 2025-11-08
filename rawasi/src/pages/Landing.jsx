@@ -127,9 +127,13 @@ export default function Landing() {
                 {lang === "ar" ? "ابدأ مشروعك" : "Start your project"}
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              
+
               <button
-                onClick={() => document.getElementById('about-how').scrollIntoView({ behavior: 'smooth' })}
+                onClick={() =>
+                  document
+                    .getElementById("about-how")
+                    .scrollIntoView({ behavior: "smooth" })
+                }
                 className="inline-flex items-center gap-2 rounded-2xl bg-white text-slate-700 px-8 py-4 font-semibold text-lg border-2 border-slate-200 hover:border-orange-300 hover:text-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 {lang === "ar" ? "كيف يعمل" : "How it works"}
@@ -170,7 +174,7 @@ export default function Landing() {
             className="relative"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-blue-500/20 rounded-3xl blur-3xl animate-pulse" />
-            
+
             <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl border-2 border-orange-200 shadow-2xl p-8 hover:shadow-orange-200/50 transition-shadow duration-500">
               <motion.div
                 initial={{ scale: 0 }}
@@ -193,9 +197,7 @@ export default function Landing() {
                   icon={<Zap className="h-5 w-5" />}
                   title={lang === "ar" ? "حساب التكلفة" : "Cost Estimator"}
                   subtitle={
-                    lang === "ar"
-                      ? "توقع دقيق للميزانية"
-                      : "Accurate budgeting"
+                    lang === "ar" ? "توقع دقيق للميزانية" : "Accurate budgeting"
                   }
                   delay={0.7}
                 />
@@ -210,9 +212,7 @@ export default function Landing() {
                 <HeroFeatureCard
                   icon={<Users className="h-5 w-5" />}
                   title={lang === "ar" ? "مقارنة شاملة" : "Compare"}
-                  subtitle={
-                    lang === "ar" ? "عروض متعددة" : "Multiple quotes"
-                  }
+                  subtitle={lang === "ar" ? "عروض متعددة" : "Multiple quotes"}
                   delay={0.9}
                 />
                 <HeroFeatureCard
@@ -242,7 +242,9 @@ function StatCard({ label, value, icon: Icon, color }) {
       whileHover={{ scale: 1.05, y: -5 }}
       className="bg-white rounded-2xl p-4 border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300"
     >
-      <div className={`inline-flex p-2 rounded-xl bg-gradient-to-br ${color} mb-2`}>
+      <div
+        className={`inline-flex p-2 rounded-xl bg-gradient-to-br ${color} mb-2`}
+      >
         <Icon className="h-5 w-5 text-white" />
       </div>
       <div className="text-2xl font-bold text-slate-900">{value}</div>
@@ -273,12 +275,8 @@ function HeroFeatureCard({ icon, title, subtitle, delay }) {
 
 function RoyalQuote({ lang }) {
   const isArabic = lang === "ar";
-  const title = isArabic
-    ? "كلمة صاحب السمو الملكي"
-    : "Words from HRH";
-  const name = isArabic
-    ? "محمد بن سلمان"
-    : "Mohammed bin Salman";
+  const title = isArabic ? "كلمة صاحب السمو الملكي" : "Words from HRH";
+  const name = isArabic ? "محمد بن سلمان" : "Mohammed bin Salman";
   const role = isArabic
     ? "ولي العهد، رئيس مجلس الوزراء"
     : "Crown Prince, Prime Minister";
@@ -301,18 +299,18 @@ function RoyalQuote({ lang }) {
               <Award className="h-3.5 w-3.5" />
               {title}
             </div>
-            
+
             <h2 className="text-2xl md:text-3xl font-bold text-slate-900">
               {name}
             </h2>
-            
+
             <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
               <Quote className="h-6 w-6 text-orange-600 mb-3" />
               <p className="text-slate-700 text-base leading-relaxed">
                 {quote}
               </p>
             </div>
-            
+
             <div className="text-slate-600 text-sm">
               <span className="font-semibold text-orange-600">{name}</span>
               <span className="text-slate-500"> — {role}</span>
@@ -329,7 +327,7 @@ function RoyalQuote({ lang }) {
             <div className="relative w-full max-w-sm">
               {/* Beautiful orange glow effect behind image */}
               <div className="absolute inset-0 bg-gradient-to-br from-orange-500/30 to-orange-600/20 rounded-3xl blur-2xl transform scale-105" />
-              
+
               {/* Image container */}
               <div className="relative bg-slate-50 rounded-2xl border border-slate-200 p-4 shadow-lg">
                 <img
@@ -374,19 +372,22 @@ function AboutWhyRawasi({ lang }) {
         {
           icon: <Zap className="h-6 w-6" />,
           title: "Instant AI Matching",
-          description: "Advanced algorithms connect you with top contractors in minutes",
+          description:
+            "Advanced algorithms connect you with top contractors in minutes",
           color: "from-orange-500 to-amber-500",
         },
         {
           icon: <Shield className="h-6 w-6" />,
           title: "Complete Transparency",
-          description: "Clear quotes, verified reviews, and track record for every contractor",
+          description:
+            "Clear quotes, verified reviews, and track record for every contractor",
           color: "from-blue-500 to-cyan-500",
         },
         {
           icon: <TrendingUp className="h-6 w-6" />,
           title: "Professional Tracking",
-          description: "Comprehensive dashboard to monitor budget and key milestones",
+          description:
+            "Comprehensive dashboard to monitor budget and key milestones",
           color: "from-green-500 to-emerald-500",
         },
       ];
@@ -404,21 +405,34 @@ function AboutWhyRawasi({ lang }) {
             <Sparkles className="h-4 w-4" />
             {isAr ? "لماذا رَواسي؟" : "Why Rawasi"}
           </span>
-          
+
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-6">
             {isAr ? (
               <>
-                اختيار <span className="bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">ذكي</span>،
-                تنفيذ <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">أسرع</span>
+                اختيار{" "}
+                <span className="bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  ذكي
+                </span>
+                ، تنفيذ{" "}
+                <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                  أسرع
+                </span>
               </>
             ) : (
               <>
-                <span className="bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">Smart</span> selection,
-                <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent"> faster</span> delivery
+                <span className="bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  Smart
+                </span>{" "}
+                selection,
+                <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                  {" "}
+                  faster
+                </span>{" "}
+                delivery
               </>
             )}
           </h2>
-          
+
           <p className="text-lg text-slate-600 max-w-3xl mx-auto">
             {isAr
               ? "منصة متكاملة تجمع البيانات بالخبرة - من الفكرة الأولى حتى التسليم النهائي"
@@ -448,13 +462,15 @@ function FeatureCard({ icon, title, description, color, index }) {
       whileHover={{ scale: 1.05, y: -10 }}
       className="group relative bg-white rounded-3xl p-8 border-2 border-slate-200 hover:border-orange-300 shadow-lg hover:shadow-2xl transition-all duration-300"
     >
-      <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${color} text-white mb-6 group-hover:scale-110 transition-transform shadow-lg`}>
+      <div
+        className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${color} text-white mb-6 group-hover:scale-110 transition-transform shadow-lg`}
+      >
         {icon}
       </div>
-      
+
       <h3 className="text-xl font-bold text-slate-900 mb-3">{title}</h3>
       <p className="text-slate-600 leading-relaxed">{description}</p>
-      
+
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
     </motion.div>
   );
@@ -464,14 +480,38 @@ function MetricsSection({ lang }) {
   const isAr = lang === "ar";
   const metrics = isAr
     ? [
-        { value: "< 48h", label: "استلام عروض", icon: <Clock className="h-6 w-6" /> },
-        { value: "92%", label: "دقة المطابقة", icon: <TrendingUp className="h-6 w-6" /> },
-        { value: "4.6★", label: "رضا العملاء", icon: <Star className="h-6 w-6" /> },
+        {
+          value: "< 48h",
+          label: "استلام عروض",
+          icon: <Clock className="h-6 w-6" />,
+        },
+        {
+          value: "92%",
+          label: "دقة المطابقة",
+          icon: <TrendingUp className="h-6 w-6" />,
+        },
+        {
+          value: "4.6★",
+          label: "رضا العملاء",
+          icon: <Star className="h-6 w-6" />,
+        },
       ]
     : [
-        { value: "< 48h", label: "Get quotes", icon: <Clock className="h-6 w-6" /> },
-        { value: "92%", label: "Match accuracy", icon: <TrendingUp className="h-6 w-6" /> },
-        { value: "4.6★", label: "Satisfaction", icon: <Star className="h-6 w-6" /> },
+        {
+          value: "< 48h",
+          label: "Get quotes",
+          icon: <Clock className="h-6 w-6" />,
+        },
+        {
+          value: "92%",
+          label: "Match accuracy",
+          icon: <TrendingUp className="h-6 w-6" />,
+        },
+        {
+          value: "4.6★",
+          label: "Satisfaction",
+          icon: <Star className="h-6 w-6" />,
+        },
       ];
 
   return (
@@ -502,7 +542,7 @@ function MetricsSection({ lang }) {
 
 function HowRawasiWorks({ lang }) {
   const isAr = lang === "ar";
-  
+
   const steps = isAr
     ? [
         {
@@ -534,7 +574,8 @@ function HowRawasiWorks({ lang }) {
         },
         {
           title: "Get Estimates",
-          description: "Our smart system calculates cost and timeline accurately",
+          description:
+            "Our smart system calculates cost and timeline accurately",
           icon: <TrendingUp className="h-6 w-6" />,
         },
         {
@@ -544,13 +585,17 @@ function HowRawasiWorks({ lang }) {
         },
         {
           title: "Track Execution",
-          description: "Monitor progress and budget with detailed weekly reports",
+          description:
+            "Monitor progress and budget with detailed weekly reports",
           icon: <Award className="h-6 w-6" />,
         },
       ];
 
   return (
-    <Section id="about-how" className="bg-gradient-to-br from-slate-50 to-orange-50/30 relative overflow-hidden">
+    <Section
+      id="about-how"
+      className="bg-gradient-to-br from-slate-50 to-orange-50/30 relative overflow-hidden"
+    >
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500 rounded-full blur-3xl" />
@@ -568,11 +613,11 @@ function HowRawasiWorks({ lang }) {
             <Zap className="h-4 w-4" />
             {isAr ? "خطوات العمل" : "How It Works"}
           </span>
-          
+
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-6">
             {isAr ? "رحلة مشروعك" : "Your Project Journey"}
           </h2>
-          
+
           <p className="text-lg text-slate-600 max-w-3xl mx-auto">
             {isAr
               ? "أربع خطوات بسيطة من التخطيط إلى التسليم النهائي"
@@ -623,9 +668,11 @@ function StepCard({ title, description, icon, index }) {
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
             <h3 className="text-2xl font-bold text-slate-900 mb-3">{title}</h3>
-            <p className="text-slate-600 text-lg leading-relaxed">{description}</p>
+            <p className="text-slate-600 text-lg leading-relaxed">
+              {description}
+            </p>
           </div>
-          
+
           <div className="p-4 bg-gradient-to-br from-orange-100 to-amber-100 rounded-2xl text-orange-600 flex-shrink-0">
             {icon}
           </div>

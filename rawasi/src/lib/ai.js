@@ -69,7 +69,7 @@ export async function llmRankProviders(project, providers) {
     const jsonMatch = text.match(/\[[\s\S]*\]/);
     if (jsonMatch) {
       const rankedProviders = JSON.parse(jsonMatch[0]);
-      
+
       // Map back to full provider data with scores
       const enhancedProviders = rankedProviders.map(ranked => {
         const fullProvider = providers.find(p => p.id === ranked.id);
@@ -137,19 +137,19 @@ function heuristicRankProviders(project, providers) {
 // Helper functions for heuristic scoring
 function calculateTechMatch(providerTech, projectTechNeeds) {
   if (!projectTechNeeds?.length) return 0.5;
-  
+
   const providerTechSet = new Set(providerTech.map(t => t.toLowerCase()));
-  const matches = projectTechNeeds.filter(need => 
+  const matches = projectTechNeeds.filter(need =>
     providerTechSet.has(need.toLowerCase())
   ).length;
-  
+
   return matches / projectTechNeeds.length;
 }
 
 function calculateBudgetScore(provider, project) {
   const estimatedCost = (provider.baseCost || 0) + (provider.costPerSqm || 0) * project.sizeSqm;
   const budgetRatio = project.budget / estimatedCost;
-  
+
   if (budgetRatio >= 1.2) return 1.0; // Well within budget
   if (budgetRatio >= 0.9) return 0.8; // Slightly over but acceptable
   if (budgetRatio >= 0.7) return 0.5; // Might be tight
@@ -160,25 +160,25 @@ function calculateLocationScore(provider, project) {
   // Prefer providers in the same city or region
   const providerLocation = provider.location?.toLowerCase() || '';
   const projectLocation = project.location?.toLowerCase() || '';
-  
+
   if (providerLocation.includes(projectLocation) || projectLocation.includes(providerLocation)) {
     return 1.0;
   }
-  
+
   // Same region bonus
   const regions = {
     'riyadh': ['riyadh', 'central'],
     'jeddah': ['jeddah', 'makkah', 'western'],
     'dammam': ['dammam', 'eastern', 'khobar', 'dhahran']
   };
-  
+
   for (const [key, cities] of Object.entries(regions)) {
-    if (cities.some(city => projectLocation.includes(city)) && 
-        cities.some(city => providerLocation.includes(city))) {
+    if (cities.some(city => projectLocation.includes(city)) &&
+      cities.some(city => providerLocation.includes(city))) {
       return 0.8;
     }
   }
-  
+
   return 0.5; // Different region
 }
 
@@ -186,7 +186,7 @@ function calculateSizeScore(provider, project) {
   const typicalSize = provider.typicalProjectSize || 1000;
   const sizeDiff = Math.abs(typicalSize - project.sizeSqm);
   const sizeRatio = sizeDiff / typicalSize;
-  
+
   if (sizeRatio <= 0.3) return 1.0; // Very similar size
   if (sizeRatio <= 0.6) return 0.7; // Moderately different
   return 0.3; // Very different size
@@ -196,7 +196,7 @@ function calculateTimelineScore(provider, project) {
   const typicalTimeline = provider.typicalTimelineMonths || 12;
   const timelineDiff = Math.abs(typicalTimeline - project.timelineMonths);
   const timelineRatio = timelineDiff / typicalTimeline;
-  
+
   if (timelineRatio <= 0.2) return 1.0; // Very similar timeline
   if (timelineRatio <= 0.4) return 0.7; // Moderately different
   return 0.3; // Very different timeline
