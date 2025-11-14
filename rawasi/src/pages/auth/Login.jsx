@@ -7,22 +7,16 @@ import {
   Eye,
   EyeOff,
   AlertCircle,
-  CheckCircle2,
-  Building2,
-  Briefcase,
-  Sparkles,
 } from "lucide-react";
 import { supabase } from "../../lib/supabase";
-//import { useNavigate } from "react-router-dom"; // Add this if using React Router
 
-export default function Login() {
+export default function Login({ onSubmit, onForgot }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  // const navigate = useNavigate(); // Uncomment if using React Router
 
   const handleSubmit = async () => {
     setErr("");
@@ -42,7 +36,7 @@ export default function Login() {
     }
 
     try {
-      // Sign in with Supabase
+      // 1) Sign in with Supabase
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
@@ -50,7 +44,7 @@ export default function Login() {
 
       if (error) throw error;
 
-      // Get user profile
+      // 2) Get user profile (optional)
       const { data: profile, error: profileError } = await supabase
         .from("profiles")
         .select("*")
@@ -61,17 +55,22 @@ export default function Login() {
         console.error("Profile fetch error:", profileError);
       }
 
-      // Success! Store user data
-      console.log("✅ Login successful!");
-      console.log("User:", data.user);
-      console.log("Profile:", profile);
-
-      // Store in localStorage
+      // 3) Store in localStorage (your existing behavior)
       localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("profile", JSON.stringify(profile));
 
-      // Option 2: Using window.location
-      window.location.href = "/dashboard";
+      // 4) ALSO log in via App.jsx so role-based routing works
+      if (onSubmit) {
+        const result = await onSubmit({ email, password });
+
+        if (!result?.ok) {
+          setErr(result.error || "Invalid email or password");
+          return;
+        }
+      }
+
+      // Do NOT redirect here; App.jsx already navigates based on role
+      // (handleLogin in App.jsx calls navigate("/provider/dashboard") or "/project")
     } catch (error) {
       console.error("Login error:", error);
       setErr(error.message || "Invalid email or password");
@@ -98,8 +97,11 @@ export default function Login() {
   };
 
   const handleForgotPassword = () => {
-    // Navigate to forgot password page
-    window.location.href = "/forgot-password";
+    if (onForgot) {
+      onForgot();
+    } else {
+      window.location.href = "/forgot-password";
+    }
   };
 
   return (
@@ -158,6 +160,7 @@ export default function Login() {
                     Password
                   </label>
                   <button
+                    type="button"
                     onClick={handleForgotPassword}
                     className="text-xs font-medium text-orange-600 hover:text-orange-700 hover:underline"
                   >

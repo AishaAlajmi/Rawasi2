@@ -32,6 +32,7 @@ export default function Header() {
           why: "Why Rawasi",
           how: "How it works",
           dash: "Dashboard",
+          Mess: "Messages",
           login: "Login",
           register: "Create account",
           profile: "Profile",
@@ -143,6 +144,16 @@ export default function Header() {
             to="/dashboard"
           >
             {L.dash}
+          </Link>
+          <Link
+            className={`hover:text-orange-600 transition-colors ${
+              pathname.startsWith("/Messages")
+                ? "text-orange-600 font-medium"
+                : "text-slate-700"
+            }`}
+            to="/Messages"
+          >
+            {L.Mess}
           </Link>
         </nav>
 

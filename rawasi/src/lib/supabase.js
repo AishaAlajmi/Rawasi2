@@ -1,4 +1,4 @@
-// src/lib/supabase.js
+// C:\Users\aisha\Downloads\Rawasi\rawasi\src\lib\supabase.js
 import { createClient } from '@supabase/supabase-js'
 
 // Supabase credentials

@@ -1,4 +1,4 @@
-// src/pages/Project.jsx - COMPLETE VERSION WITH COST & TIMELINE ML MODEL INTEGRATION
+// C:\Users\aisha\Downloads\Rawasi\rawasi\src\pages\Project.jsx
 import React, { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -152,13 +152,13 @@ function QuickPreferencesSidebar({ answers, setAnswers }) {
 }
 
 function LiveEstimator({
-  est,
   aiPrediction,
   timelinePrediction,
   isLoadingAI,
   isLoadingTimeline,
 }) {
-  const { estCost, estTimeMonths } = est;
+  const bothLoading = isLoadingAI || isLoadingTimeline;
+  const bothReady = aiPrediction?.success && timelinePrediction?.success;
 
   return (
     <motion.div
@@ -173,28 +173,32 @@ function LiveEstimator({
         <Calculator className="h-5 w-5" /> Live Project Estimate
       </div>
 
-      {/* AI Predictions Grid */}
-      <div className="space-y-4">
-        {/* Cost Prediction Card */}
-        {isLoadingAI ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="rounded-xl bg-white p-4 shadow-md border border-orange-100"
-          >
-            <div className="flex items-center justify-center gap-2 text-orange-600">
-              <Loader2 className="h-5 w-5 animate-spin" />
-              <span className="text-sm font-medium">Analyzing cost...</span>
-            </div>
-          </motion.div>
-        ) : aiPrediction?.success ? (
+      {/* Show loading when any AI call is still running */}
+      {bothLoading && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="rounded-xl bg-white p-4 shadow-md border border-orange-100 text-center"
+        >
+          <div className="flex items-center justify-center gap-2 text-orange-600">
+            <Loader2 className="h-5 w-5 animate-spin" />
+            <span className="text-sm font-medium">
+              Analyzing cost & timeline...
+            </span>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Show both AI predictions together only if both are ready */}
+      {!bothLoading && bothReady && (
+        <div className="space-y-4">
+          {/* COST CARD (AI ONLY) */}
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 200 }}
             className="relative rounded-2xl bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100/50 p-5 border-2 border-amber-200/60 shadow-lg overflow-hidden"
           >
-            {/* Decorative background pattern */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-200/20 to-transparent rounded-full blur-2xl"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-orange-200/20 to-transparent rounded-full blur-xl"></div>
 
@@ -229,42 +233,14 @@ function LiveEstimator({
               </div>
             </div>
           </motion.div>
-        ) : (
-          <motion.div
-            initial={{ scale: 0.95 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 150 }}
-            className="rounded-xl bg-white p-4 text-center shadow-md border border-orange-200"
-          >
-            <div className="text-sm text-slate-600 font-medium mb-1">
-              Estimated Cost
-            </div>
-            <div className="text-2xl font-extrabold text-orange-600">
-              {currency(estCost)}
-            </div>
-          </motion.div>
-        )}
 
-        {/* Timeline Prediction Card */}
-        {isLoadingAI ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="rounded-xl bg-white p-4 shadow-md border border-orange-100"
-          >
-            <div className="flex items-center justify-center gap-2 text-orange-600">
-              <Loader2 className="h-5 w-5 animate-spin" />
-              <span className="text-sm font-medium">Analyzing cost...</span>
-            </div>
-          </motion.div>
-        ) : timelinePrediction?.success ? (
+          {/* TIMELINE CARD (AI ONLY) */}
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 200 }}
             className="relative rounded-2xl bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100/50 p-5 border-2 border-amber-200/60 shadow-lg overflow-hidden"
           >
-            {/* Decorative background pattern */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-200/20 to-transparent rounded-full blur-2xl"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-orange-200/20 to-transparent rounded-full blur-xl"></div>
 
@@ -315,7 +291,6 @@ function LiveEstimator({
                 )}
               </div>
 
-              {/* Speed indicator badge */}
               {timelinePrediction.predicted_months < 10 && (
                 <motion.div
                   initial={{ scale: 0, opacity: 0 }}
@@ -331,24 +306,29 @@ function LiveEstimator({
               )}
             </div>
           </motion.div>
-        ) : (
-          <motion.div
-            initial={{ scale: 0.95 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 150, delay: 0.1 }}
-            className="rounded-xl bg-white p-4 text-center shadow-md border border-orange-200"
-          >
-            <div className="text-sm text-slate-600 font-medium mb-1">
-              Estimated Time
-            </div>
-            <div className="text-2xl font-extrabold text-orange-600">
-              {estTimeMonths} mo
-            </div>
-          </motion.div>
-        )}
-      </div>
+        </div>
+      )}
 
-      {/* Promise Section */}
+      {/* AI Unavailable fallback (single message) */}
+      {!bothLoading && !bothReady && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="rounded-xl bg-white p-4 text-center shadow-md border border-slate-200"
+        >
+          <div className="flex items-center justify-center gap-2 text-slate-600 mb-1">
+            <AlertCircle className="h-4 w-4 text-amber-500" />
+            <span className="text-sm font-semibold">
+              AI predictions are currently unavailable.
+            </span>
+          </div>
+          <p className="text-xs text-slate-500">
+            Please adjust your inputs or try again later.
+          </p>
+        </motion.div>
+      )}
+
+      {/* Promise section unchanged */}
       <div className="mt-6 border-t pt-5 border-orange-100">
         <div className="text-sm font-semibold text-slate-700 mb-3">
           Our Promise
@@ -514,23 +494,84 @@ function ProjectWizard({ onComplete }) {
     setTimeout(() => setStep((s) => clamp(s - 1, 0, 1)), 50);
   };
 
+  // 🔥 NEW: Save project in Supabase.projects then call onComplete
   const submit = async () => {
     setError("");
     setIsSubmitting(true);
+
     try {
+      // 1) Get logged-in user
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+
+      if (sessionError) throw sessionError;
+      if (!session?.user) {
+        setError("Please login to save your project.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      const userId = session.user.id;
+
+      // 2) Build payload matching `projects` table
+      const payload = {
+        user_id: userId,
+        name: project.name,
+        type: project.type,
+        location: project.location,
+        size_sqm: project.sizeSqm,
+        n_floors: project.Nfloors,
+        budget: project.budget,
+        timeline_months: project.timelineMonths,
+        tech_needs: project.techNeeds.length ? project.techNeeds : null,
+
+        want_speed: answers.wantSpeed,
+        need_insulation: answers.needInsulation,
+        need_quiet: answers.needQuiet,
+        need_fire: answers.needFire,
+        plan_changes: answers.planChanges,
+        need_water: answers.needWater,
+
+        // نخزّن الـ AI prediction كـ JSON في العمود ai_prediction (jsonb)
+        ai_prediction:
+          aiPrediction?.success && aiPrediction
+            ? {
+                predicted_cost: aiPrediction.predicted_cost,
+                confidence_interval: aiPrediction.confidence_interval,
+                cost_per_sqm: aiPrediction.cost_per_sqm,
+              }
+            : null,
+
+        // حالياً ما نرفع صورة المخطط إلى التخزين، فـ نخلي plan_image_url = null / default
+        // plan_image_url: null,
+      };
+
+      // 3) Insert into projects
+      const { data, error: insertError } = await supabase
+        .from("projects")
+        .insert(payload)
+        .select()
+        .single();
+
+      if (insertError) throw insertError;
+
+      console.log("✅ Project saved in Supabase:", data);
+
+      // 4) Pass saved project (with id) + extra info to Recommendations page
       onComplete?.({
-        ...project,
+        ...data, // contains id, columns from DB
         answers,
-        aiPrediction: aiPrediction?.success
-          ? aiPrediction.predicted_cost
-          : null,
-        timelinePrediction: timelinePrediction?.success
-          ? timelinePrediction.predicted_months
-          : null,
+        aiPrediction,
+        timelinePrediction,
       });
     } catch (err) {
       console.error("Submission failed:", err);
-      setError("Could not continue. Please review your inputs and try again.");
+      setError(
+        "Could not continue. Please review your inputs and try again. " +
+          (err.message || "")
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -1007,7 +1048,6 @@ function ProjectWizard({ onComplete }) {
               )}
               {step === 1 && (
                 <LiveEstimator
-                  est={{ estCost, estTimeMonths }}
                   aiPrediction={aiPrediction}
                   timelinePrediction={timelinePrediction}
                   isLoadingAI={isLoadingAI}

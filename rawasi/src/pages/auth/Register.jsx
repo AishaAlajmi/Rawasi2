@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   UserPlus,
@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   AlertCircle,
 } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 
 export default function Register({ onSubmit }) {
@@ -26,6 +27,17 @@ export default function Register({ onSubmit }) {
   const [success, setSuccess] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+
+  const location = useLocation();
+
+  // ✅ Read ?role=provider or ?role=owner from URL and set default role
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const roleParam = params.get("role");
+    if (roleParam === "provider" || roleParam === "owner") {
+      setForm((prev) => ({ ...prev, role: roleParam }));
+    }
+  }, [location.search]);
 
   const checkPasswordStrength = (pass) => {
     let strength = 0;
@@ -67,41 +79,60 @@ export default function Register({ onSubmit }) {
     }
 
     try {
-      // 1. Sign up user with Supabase Auth
+      // 1) Sign up user with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: form.email,
         password: form.password,
+        options: {
+          data: {
+            name: form.name,
+            phone: form.phone,
+            role: form.role,
+          },
+        },
       });
 
       if (authError) throw authError;
 
-      // 2. Create profile in profiles table
+      // 2) Create profile in profiles table (ignore RLS error but don't block)
       const { error: profileError } = await supabase.from("profiles").insert({
         id: authData.user.id,
         name: form.name,
         phone: form.phone,
         role: form.role,
+        email: form.email,
         created_at: new Date().toISOString(),
       });
 
-      if (profileError) throw profileError;
+      if (profileError) {
+        console.warn(
+          "Profile insert error (ignored, RLS probably):",
+          profileError.message
+        );
+        // Do NOT throw here, we still want local auth + routing to work
+      }
+
+      // 3) ALSO register in App.jsx local users (for role-based routing)
+      if (onSubmit) {
+        const result = await onSubmit({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          password: form.password,
+          role: form.role, // "owner" or "provider"
+        });
+
+        if (!result?.ok) {
+          setErr(result.error || "Registration failed");
+          setIsLoading(false);
+          return;
+        }
+      }
 
       // Success!
       setSuccess(true);
-
-      // Optional: Auto-login after registration
-      setTimeout(() => {
-        onSubmit?.({
-          ok: true,
-          user: authData.user,
-          profile: {
-            name: form.name,
-            phone: form.phone,
-            role: form.role,
-          },
-        });
-      }, 2000);
     } catch (error) {
+      console.error("Register error:", error);
       setErr(error.message || "Registration failed. Please try again.");
     } finally {
       setIsLoading(false);
@@ -164,7 +195,7 @@ export default function Register({ onSubmit }) {
                   Account Created!
                 </h2>
                 <p className="text-slate-600">
-                  Welcome to RAWASI. Redirecting to your dashboard...
+                  Welcome to RAWASI. You can now log in to your account.
                 </p>
               </motion.div>
             ) : (

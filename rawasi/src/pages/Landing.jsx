@@ -14,6 +14,7 @@ import {
   Users,
   Clock,
   Award,
+  Briefcase, // ✅ added
 } from "lucide-react";
 import { Section, Pill, Stat } from "../components/ui.jsx";
 import rawasiLogo from "../assets/im-947097.avif";
@@ -229,6 +230,9 @@ export default function Landing() {
         </div>
       </Section>
 
+      {/* ✅ NEW: Join as Provider section, but keeping owner homepage as-is */}
+      <JoinAsProviderSection />
+
       <RoyalQuote lang={lang} />
       <AboutWhyRawasi lang={lang} />
       <HowRawasiWorks lang={lang} />
@@ -270,6 +274,134 @@ function HeroFeatureCard({ icon, title, subtitle, delay }) {
       <div className="font-bold text-slate-900 text-sm">{title}</div>
       <div className="text-xs text-slate-600 mt-1">{subtitle}</div>
     </motion.div>
+  );
+}
+
+/* ✅ New: Join-as-provider section */
+
+function JoinAsProviderSection() {
+  const navigate = useNavigate();
+
+  return (
+    <Section className="bg-gradient-to-br from-slate-50 via-orange-50/30 to-amber-50/20">
+      <div className="mx-auto max-w-7xl px-4 py-16 md:py-20">
+        <div className="grid gap-10 md:grid-cols-2 items-center">
+          {/* Text side */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="inline-flex items-center gap-2 rounded-full bg-orange-100 px-4 py-1.5 text-xs font-semibold text-orange-700 border border-orange-200 mb-4">
+              <Sparkles className="h-3 w-3" />
+              Provider Portal
+            </div>
+
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">
+              Join RAWASI as a{" "}
+              <span className="bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                service provider
+              </span>
+            </h2>
+
+            <p className="text-slate-600 text-sm md:text-base max-w-xl">
+              Showcase your modern construction capabilities, receive qualified
+              project requests, and manage everything from a professional
+              provider dashboard.
+            </p>
+
+            <div className="mt-6 space-y-3 text-sm text-slate-700">
+              <div className="flex items-center gap-2">
+                <Briefcase className="h-4 w-4 text-orange-500" />
+                <span>Get matched with serious project owners only.</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-orange-500" />
+                <span>Track performance with reports and insights.</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-orange-500" />
+                <span>Communicate through built-in messaging tools.</span>
+              </div>
+            </div>
+
+            <motion.button
+              whileHover={{ scale: 1.03, y: -1 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => navigate("/register?role=provider")}
+              className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40"
+            >
+              Join as Provider
+              <ArrowRight className="h-4 w-4" />
+            </motion.button>
+          </motion.div>
+
+          {/* Card side */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <div className="relative rounded-3xl bg-white/90 p-6 shadow-2xl border border-orange-100">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-lg">
+                  <Briefcase className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-slate-900">
+                    Provider Dashboard
+                  </div>
+                  <div className="text-xs text-slate-500">
+                    Overview • Requests • Messages • Reports
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 text-xs">
+                <div className="rounded-2xl bg-orange-50 p-3 border border-orange-100">
+                  <p className="text-[11px] text-slate-600 mb-1">
+                    Active projects
+                  </p>
+                  <p className="text-xl font-bold text-orange-600">5</p>
+                  <p className="text-[11px] text-orange-700 mt-1">
+                    +2 this month
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-blue-50 p-3 border border-blue-100">
+                  <p className="text-[11px] text-slate-600 mb-1">
+                    Response time
+                  </p>
+                  <p className="text-xl font-bold text-blue-600">3.2h</p>
+                  <p className="text-[11px] text-blue-700 mt-1">
+                    Top 10% providers
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-emerald-50 p-3 border border-emerald-100">
+                  <p className="text-[11px] text-slate-600 mb-1">
+                    On-time delivery
+                  </p>
+                  <p className="text-xl font-bold text-emerald-600">94%</p>
+                  <p className="text-[11px] text-emerald-700 mt-1">
+                    Last 12 months
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-slate-50 p-3 border border-slate-100">
+                  <p className="text-[11px] text-slate-600 mb-1">
+                    Client rating
+                  </p>
+                  <p className="text-xl font-bold text-slate-900">4.6★</p>
+                  <p className="text-[11px] text-slate-700 mt-1">
+                    Based on 38 reviews
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </Section>
   );
 }
 

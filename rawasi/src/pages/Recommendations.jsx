@@ -1,5 +1,6 @@
-// src/pages/Recommendations.jsx - UPDATED TO USE LLM BACKEND
+// C:\Users\aisha\Downloads\Rawasi\rawasi\src\pages\Recommendations.jsx
 import React, { useMemo, useState, useEffect } from "react";
+import { navigateToChat } from "../lib/chatHelpers";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   MapPin,
@@ -19,8 +20,8 @@ import {
   Brain,
 } from "lucide-react";
 import { Section } from "../components/ui.jsx";
-import { currency } from "../lib/utils.js";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabase"; // ⬅️ NEW
 
 export default function Recommendations({
   project,
@@ -66,7 +67,29 @@ export default function Recommendations({
   const [showFilters, setShowFilters] = useState(false);
   const [projectComplexity, setProjectComplexity] = useState(null);
 
-  // Load recommendations from project.recommendations or fetch from API
+  // NEW: current user info (owner)
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [currentUserEmail, setCurrentUserEmail] = useState(null);
+
+  // Load current user session
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        if (error) throw error;
+        const session = data?.session;
+        if (session?.user) {
+          setCurrentUserId(session.user.id);
+          setCurrentUserEmail(session.user.email);
+        }
+      } catch (err) {
+        console.error("❌ Error loading user session:", err);
+      }
+    };
+    loadUser();
+  }, []);
+
+  // Load recommendations from project or API
   useEffect(() => {
     const loadRecommendations = async () => {
       if (!project) return;
@@ -75,7 +98,7 @@ export default function Recommendations({
       setError(null);
 
       try {
-        // Check if recommendations are already in project object
+        // if project already has recommendations
         if (
           project.recommendations?.success &&
           project.recommendations?.suppliers
@@ -83,7 +106,6 @@ export default function Recommendations({
           console.log("✅ Using existing recommendations from project");
           const recs = project.recommendations;
 
-          // Transform suppliers to match our format
           const transformedSuppliers = recs.suppliers.map(
             (supplier, index) => ({
               id: `llm_${index}`,
@@ -104,7 +126,7 @@ export default function Recommendations({
               baseCost: 100000,
               costPerSqm: 4000,
               matched_technology: supplier.matched_technology,
-              finalScore: supplier.match_score / 100, // Normalize to 0-1
+              finalScore: supplier.match_score / 100,
             })
           );
 
@@ -115,7 +137,6 @@ export default function Recommendations({
           return;
         }
 
-        // If no recommendations in project, fetch from API
         console.log("🔍 Fetching recommendations from API...");
         const API_URL =
           import.meta.env.VITE_RECOMMENDATION_API_URL ||
@@ -134,25 +155,19 @@ export default function Recommendations({
 
         const response = await fetch(`${API_URL}/recommend`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(recommendationData),
         });
 
-        if (!response.ok) {
-          throw new Error(`API returned ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`API returned ${response.status}`);
 
         const data = await response.json();
-
         if (!data.success) {
           throw new Error(data.message || "No recommendations found");
         }
 
         console.log("✅ Recommendations received from API:", data);
 
-        // Transform API response
         const transformedSuppliers = data.suppliers.map((supplier, index) => ({
           id: `llm_${index}`,
           name: supplier.name,
@@ -190,7 +205,7 @@ export default function Recommendations({
     loadRecommendations();
   }, [project]);
 
-  // Tech filter options
+  // Tech options
   const techOptions = useMemo(() => {
     const set = new Set([t.all]);
     recommendations.forEach((p) =>
@@ -211,15 +226,94 @@ export default function Recommendations({
 
   const topPicks = recommendations.slice(0, 3);
 
-  // Request handler
-  const handleRequest = async (provider) => {
-    setRequestingId(provider.id);
-    await new Promise((r) => setTimeout(r, 1500));
-    setRequested((prev) => new Set([...prev, provider.id]));
-    setRequestingId(null);
-  };
+  // -------------- REAL REQUEST HANDLER (owner → provider) --------------
+const handleRequest = async (provider) => {
+  if (!currentUserId) {
+    alert("Please login first to send a request.");
+    return;
+  }
+  if (!project?.id) {
+    alert("Missing project id. Please save your project first.");
+    return;
+  }
 
-  // Loading state
+  try {
+    setRequestingId(provider.id);
+    setError(null);
+
+    // 1) نجيب الـ provider من جدول providers عن طريق الإيميل
+    const { data: providerRow, error: providerError } = await supabase
+      .from("provider")
+      .select("provider_id")
+      .eq("email", provider.email)
+      .maybeSingle();
+
+    if (providerError) throw providerError;
+    if (!providerRow) {
+      throw new Error(
+        "Provider not found in 'providers' table for email: " + provider.email
+      );
+    }
+
+    const providerId = providerRow.provider_id; // هذا اللي بنحطه في project_requests
+
+    const area =
+      Number(project?.sizeSqm || project?.size_sqm) > 0
+        ? Number(project.sizeSqm || project.size_sqm)
+        : null;
+
+    // 2) insert into project_requests
+    const { data, error: insertError } = await supabase
+      .from("project_requests")
+      .insert({
+        project_id: project.id,
+        user_id: currentUserId,      // صاحب المشروع (auth.users.id)
+        provider_id: providerId,     // من جدول providers
+        status: "pending",
+
+        // معلومات إضافية اختيارية
+        title: project.name || "Project request",
+        client_name: currentUserEmail, // ممكن لاحقًا تغيّرينها لاسم من profiles.name
+        location: project.location || provider.locationEn,
+        budget: project.budget || null,
+        project_type: project.type || null,
+        description:
+          llmInsights?.summary ||
+          `Request to ${provider.name} for project ${project.name || ""}`,
+        timeline: project.timelineMonths
+          ? `${project.timelineMonths} months`
+          : project.timeline_months
+          ? `${project.timeline_months} months`
+          : null,
+        size: area ? `${area} sqm` : null,
+        floors:
+          project.Nfloors || project.n_floors
+            ? String(project.Nfloors || project.n_floors)
+            : null,
+        requirements:
+          provider.matchReasons && provider.matchReasons.length > 0
+            ? provider.matchReasons
+            : null,
+      })
+      .select()
+      .single();
+
+    if (insertError) throw insertError;
+
+    console.log("✅ Project request inserted:", data);
+
+    // 3) نحدّث الواجهة إن الطلب تم إرساله
+    setRequested((prev) => new Set([...prev, provider.id]));
+  } catch (err) {
+    console.error("❌ Error sending request:", err);
+    setError(err.message || "Failed to send request");
+    alert("Failed to send request: " + err.message);
+  } finally {
+    setRequestingId(null);
+  }
+};
+
+  // ----------------------- Loading / Error / Empty -----------------------
   if (isLoading) {
     return (
       <Section className="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
@@ -261,7 +355,6 @@ export default function Recommendations({
     );
   }
 
-  // Error state
   if (error) {
     return (
       <Section className="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
@@ -273,7 +366,7 @@ export default function Recommendations({
           >
             <X className="h-12 w-12 text-red-600 mx-auto mb-4" />
             <h2 className="text-xl font-bold text-red-900 mb-2">
-              Unable to Load Recommendations
+              Something went wrong
             </h2>
             <p className="text-red-700 mb-6">{error}</p>
             <button
@@ -288,7 +381,6 @@ export default function Recommendations({
     );
   }
 
-  // No results
   if (recommendations.length === 0) {
     return (
       <Section className="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
@@ -421,9 +513,8 @@ export default function Recommendations({
                   provider={provider}
                   rank={index + 1}
                   onRequest={handleRequest}
-                  onMessage={() =>
-                    navigate("/messages", { state: { provider } })
-                  }
+                  // Then replace onMessage with:
+                  onMessage={() => navigateToChat(navigate, provider)}
                   isRequesting={requestingId === provider.id}
                   isRequested={requested.has(provider.id)}
                   t={t}
