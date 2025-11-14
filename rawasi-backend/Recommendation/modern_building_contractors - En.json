@@ -6,8 +6,8 @@
     "Contact_Person": "Abdullah Al-Samida",
     "Email": "a.alsamida@alarabiyaco.com",
     "Mobile_Number": "0595550567",
-    "Building_Tech_Type": "Precast system",
-    "totalScore": 4.3
+    "Building_Tech_Type": "3D Concrete panels",
+    "totalScore": 4.9
   },
   {
     "Contractor_Name": "Ramada Contracting Company",
@@ -485,14 +485,7 @@
     "Email": "i.el-sokhon@tripple-walls.com",
     "Mobile_Number": "0553199990"
   },
-  {
-    "Factory_Name": "Al Kathiri Holding (ALIAN INDUSTRY CO)",
-    "Tech_Type": "3D Concrete panels",
-    "Contact_Person": "Dr. Mohammad Alkathiri",
-    "Email": "info@alianindustry.com",
-    "Mobile_Number": "0550478179",
-    "totalScore": 4.4
-  },
+  
   {
     "Factory_Name": "Dal Al-Tameer",
     "Tech_Type": "Insulated Concrete Form (ICF)",
